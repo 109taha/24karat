@@ -7,7 +7,7 @@ app.use(express.json());
 const route = require('./routes/allRoutes');
 
 // Use the router middleware
-app.use('/', route);
+app.use('/v1', route);
 
 
 // connect mongodb
