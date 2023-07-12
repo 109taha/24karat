@@ -78,7 +78,7 @@ const adminlogin = (async (req, res) => {
         }
 
         //create a token 
-        const token = jwt.sign({ userID: user._id }, process.env.JWT_SEC)
+        const token = jwt.sign({ userID: user._id }, process.env.JWT_SEC_ADMIN)
 
         //login user
         res.status(200).json({

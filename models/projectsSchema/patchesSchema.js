@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const patchesSchema = mongoose.Schema(
+const patchesSchema = new mongoose.Schema(
     {
         DesignName: {
             type: String,
@@ -62,11 +62,11 @@ const patchesSchema = mongoose.Schema(
             require: true,
         },
         attachArtwork: {
-            type: File,
+            type: String,
         }
     },
     { timestamps: true },
 )
-const Patches = mongoose.model("patches", patchesSchema);
+const Patches = mongoose.model("Patches", patchesSchema);
 
 module.exports = Patches;

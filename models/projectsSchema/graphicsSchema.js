@@ -32,11 +32,11 @@ const graphicsSchema = mongoose.Schema(
             require: true,
         },
         attachArtwork: {
-            type: File,
+            type: String,
         }
     },
     { timestamps: true },
 )
-const Graphics = mongoose.model("graphics", graphicsSchema);
+const Graphics = mongoose.model("Graphics Designing", graphicsSchema);
 
 module.exports = Graphics;

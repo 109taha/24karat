@@ -57,11 +57,11 @@ const vertorSchema = mongoose.Schema(
             require: true,
         },
         attachArtwork: {
-            type: File,
+            type: String,
         }
     },
     { timestamps: true },
 )
-const Vector = mongoose.model("vector", vertorSchema);
+const Vector = mongoose.model("Vector Conversions", vertorSchema);
 
 module.exports = Vector;

@@ -12,7 +12,7 @@ const designerRegister = (async (req, res) => {
                 .status(400)
                 .json({
                     success: false,
-                    message: "designer Already Registered!"
+                    message: "Designer Already Registered!"
                 })
         }
 
@@ -22,11 +22,11 @@ const designerRegister = (async (req, res) => {
         req.body.password = hashedpassword
 
         //save user
-        const newdesigner = new designer(req.body);
+        const newdesigner = new Designer(req.body);
         await newdesigner.save();
         res.status(200).json({
             success: true,
-            message: "designer registered successfully!"
+            message: "Designer Registered Successfully!"
         });
 
     } catch (error) {
@@ -34,7 +34,7 @@ const designerRegister = (async (req, res) => {
             .status(500)
             .json({
                 success: false,
-                message: "something went wrong!"
+                message: "Something Went Wrong!1"
             });
     }
 })
@@ -47,13 +47,13 @@ const designerLogin = (async (req, res) => {
         if (!email) {
             return res.status(401).json({
                 success: false,
-                message: "Kindly provide a E-mail"
+                message: "Kindly Provide A E-mail"
             })
         }
         if (!password) {
             return res.status(401).json({
                 success: false,
-                message: "Kindly provide an valid password"
+                message: "Kindly Provide An Valid Password"
             })
         }
         //checking the user axistence
@@ -61,7 +61,7 @@ const designerLogin = (async (req, res) => {
         if (!user) {
             return res.status(401).json({
                 success: false,
-                message: "designer Is Not Registered!"
+                message: "Designer Is Not Registered!"
             })
         }
         //compareing hashedpassword
@@ -96,7 +96,7 @@ const designerLogin = (async (req, res) => {
 //delete designer
 const designerDelete = (async (req, res) => {
     try {
-        const user = await designer.findByIdAndDelete(req.params.id);
+        const user = await Designer.findByIdAndDelete(req.params.id);
         if (!user) {
             return res.status(400).send({ success: false, message: "can't find the designer" })
         }
@@ -104,8 +104,17 @@ const designerDelete = (async (req, res) => {
     } catch (err) {
         res.status(500).send(err);
     }
-
 });
 
+//get designer
+const getAllDesigner = (async (req, res) => {
+    try {
+        const allDesigner = await Designer.find()
+        res.status(200).send(allDesigner)
+    } catch (err) {
+        res.status(500).send("something went wrong")
+    }
+})
 
-module.exports = { designerRegister, designerLogin, designerDelete }
+
+module.exports = { designerRegister, designerLogin, designerDelete, getAllDesigner }

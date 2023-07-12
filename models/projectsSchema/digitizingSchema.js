@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
-const digitizingSchema = mongoose.Schema(
+const digitizingSchema = new mongoose.Schema(
     {
+        userId: {
+            type: mongoose.Schema.ObjectId,
+            require: true,
+            ref: "User"
+        },
         DesignName: {
             type: String,
             reqiure: true,
@@ -13,7 +18,7 @@ const digitizingSchema = mongoose.Schema(
             trim: true
         },
         NameOfColors: {
-            type: String,
+            type: Array,
             reqiure: true,
             trim: true
         },
@@ -108,11 +113,11 @@ const digitizingSchema = mongoose.Schema(
             require: true,
         },
         attachArtwork: {
-            type: File,
+            type: String,
         }
     },
     { timestamps: true },
 )
-const Digitizing = mongoose.model("digitizing", digitizingSchema);
+const Digitizing = mongoose.model("Digitizing", digitizingSchema);
 
 module.exports = Digitizing;
