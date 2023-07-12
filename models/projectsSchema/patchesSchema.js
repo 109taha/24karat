@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const patchesSchema = new mongoose.Schema(
     {
+        userId: {
+            type: mongoose.Schema.ObjectId,
+            require: true,
+            ref: "User"
+        },
         DesignName: {
             type: String,
             reqiure: true,
@@ -63,6 +68,11 @@ const patchesSchema = new mongoose.Schema(
         },
         attachArtwork: {
             type: String,
+        },
+        currentStatus: {
+            type: String,
+            enum: ["Pending", "InProcess", "commpleted"],
+            default: ["Pending"]
         }
     },
     { timestamps: true },

@@ -18,7 +18,7 @@ const digitizingSchema = new mongoose.Schema(
             trim: true
         },
         NameOfColors: {
-            type: Array,
+            type: String,
             reqiure: true,
             trim: true
         },
@@ -114,6 +114,11 @@ const digitizingSchema = new mongoose.Schema(
         },
         attachArtwork: {
             type: String,
+        },
+        currentStatus: {
+            type: String,
+            enum: ["Pending", "InProcess", "commpleted"],
+            default: ["Pending"]
         }
     },
     { timestamps: true },

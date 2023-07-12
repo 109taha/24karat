@@ -14,7 +14,10 @@ const { register, login, deleted } = require("../controller/user");
 const { adminRegister, adminlogin } = require("../controller/admin");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
 const { creatingProject, getUserProject, getAllProject, updatedProject } = require("../controller/project");
-const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing")
+const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
+const { creatingProjectVector, getUserProjectvector, getAllProjectVector, updatedProjectVector } = require("../controller/projects/vactor");
+const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
+const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, updatedProjectPatches } = require("../controller/projects/patches");
 
 
 //router
@@ -45,11 +48,29 @@ router.get("/getAllDesginer", verifyAdmin, getAllDesigner);
 
 //project
 
+
 //digitizing
 router.post("/projectDigitizing", verifyUser, creatingProjectDigitizing);
 router.get("/digitizing/:id", getUserProjectDigitizing);
-router.get("/getAllProjectdigitizing", verifyAdmin, getAllProjectDigitizing);
-router.put("/updatedigitizing", verifyAdmin, updatedProjectDigitizing);
+router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
+// router.put("/updatedigitizing", verifyAdmin, updatedProjectDigitizing);
 
+//Vector
+router.post("/projectVector", verifyUser, creatingProjectVector);
+router.get("/Vector/:id", getUserProjectvector);
+router.get("/Vector", verifyAdmin, getAllProjectVector);
+// router.put("/updatedVector", verifyAdmin, updatedProjectVector);
+
+//Graphices
+router.post("/projectGraphices", verifyUser, creatingProjectGraphices);
+router.get("/Graphices/:id", getUserProjectGraphices);
+router.get("/Graphices", verifyAdmin, getAllProjectGraphices);
+// router.put("/updatedGraphices", verifyAdmin, updatedProjectGraphices);
+
+//Patches
+router.post("/projectPatches", verifyUser, creatingProjectPatches);
+router.get("/Patches/:id", getUserProjectPatches);
+router.get("/Patches", verifyAdmin, getAllProjectPatches);
+// router.put("/updatedPatches", verifyAdmin, updatedProjectPatches);
 
 module.exports = router;

@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const graphicsSchema = mongoose.Schema(
     {
+        userId: {
+            type: mongoose.Schema.ObjectId,
+            require: true,
+            ref: "User"
+        },
         DesignIdea: {
             type: String,
             reqiure: true,
@@ -33,6 +38,11 @@ const graphicsSchema = mongoose.Schema(
         },
         attachArtwork: {
             type: String,
+        },
+        currentStatus: {
+            type: String,
+            enum: ["Pending", "InProcess", "commpleted"],
+            default: ["Pending"]
         }
     },
     { timestamps: true },

@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const vertorSchema = mongoose.Schema(
     {
+        userId: {
+            type: mongoose.Schema.ObjectId,
+            require: true,
+            ref: "User"
+        },
         DesignName: {
             type: String,
             reqiure: true,
@@ -58,6 +63,11 @@ const vertorSchema = mongoose.Schema(
         },
         attachArtwork: {
             type: String,
+        },
+        currentStatus: {
+            type: String,
+            enum: ["Pending", "InProcess", "commpleted"],
+            default: ["Pending"]
         }
     },
     { timestamps: true },
