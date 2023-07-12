@@ -12,12 +12,12 @@ const graphicsSchema = mongoose.Schema(
             reqiure: true,
             trim: true
         },
-        NumberOfColor: {
+        NumberOfColors: {
             type: Number,
             reqiure: true,
             trim: true
         },
-        NameOfColor: {
+        NameOfColors: {
             type: String,
             reqiure: true,
             trim: true

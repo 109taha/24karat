@@ -55,7 +55,7 @@ const vertorSchema = mongoose.Schema(
         timeFrame: {
             type: String,
             require: true,
-            enum: ["normal turn-around", "urgent turn-around: {1-12 hours}, addition 5$"]
+            enum: ["Normal turn-around", "Urgent turn-around: {1-12 hours}, addition 5$"]
         },
         additionalInstructions: {
             type: String,

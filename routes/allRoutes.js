@@ -7,6 +7,10 @@ const verifyUser = require("../middleWares/userVerify")
 const verifyAdmin = require("../middleWares/adminVerify")
 const userSchemaJoi = require("../middleWares/joiMiddleware/userSchemaJoi")
 const validDesignerSchema = require("../middleWares/joiMiddleware/designerSchemaJoi")
+const graphicsJoi = require("../middleWares/joiMiddleware/projectSchema/graphicsJoi")
+const vactorJoi = require("../middleWares/joiMiddleware/projectSchema/vactorJoi")
+const digitizingJoi = require("../middleWares/joiMiddleware/projectSchema/digitizingJoi")
+const patchesJoi = require("../middleWares/joiMiddleware/projectSchema/patchesJoi")
 
 
 //controller
@@ -50,27 +54,28 @@ router.get("/getAllDesginer", verifyAdmin, getAllDesigner);
 
 
 //digitizing
-router.post("/projectDigitizing", verifyUser, creatingProjectDigitizing);
+router.post("/projectDigitizing", digitizingJoi, verifyUser, creatingProjectDigitizing);
 router.get("/digitizing/:id", getUserProjectDigitizing);
 router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
 // router.put("/updatedigitizing", verifyAdmin, updatedProjectDigitizing);
 
 //Vector
-router.post("/projectVector", verifyUser, creatingProjectVector);
+router.post("/projectVector", vactorJoi, verifyUser, creatingProjectVector);
 router.get("/Vector/:id", getUserProjectvector);
 router.get("/Vector", verifyAdmin, getAllProjectVector);
 // router.put("/updatedVector", verifyAdmin, updatedProjectVector);
 
 //Graphices
-router.post("/projectGraphices", verifyUser, creatingProjectGraphices);
+router.post("/projectGraphices", graphicsJoi, verifyUser, creatingProjectGraphices);
 router.get("/Graphices/:id", getUserProjectGraphices);
 router.get("/Graphices", verifyAdmin, getAllProjectGraphices);
 // router.put("/updatedGraphices", verifyAdmin, updatedProjectGraphices);
 
 //Patches
-router.post("/projectPatches", verifyUser, creatingProjectPatches);
+router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 router.get("/Patches/:id", getUserProjectPatches);
 router.get("/Patches", verifyAdmin, getAllProjectPatches);
 // router.put("/updatedPatches", verifyAdmin, updatedProjectPatches);
+
 
 module.exports = router;

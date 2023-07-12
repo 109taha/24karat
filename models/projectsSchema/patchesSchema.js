@@ -47,7 +47,7 @@ const patchesSchema = new mongoose.Schema(
             reqiure: true,
             enum: ["Embroidered Patches", "Chenille Patches", "Enamel Pins", "Challenge Coins", "Tackle Twill Patches", "Applique Patches", "Leather Patches", "PVC/ Rubber Patches", "Printed/ Sublimated Patches", "Woven Patches", "Sequin Patches", "Ebroidered Keychains", "Chenille Keychains", "Leather Keychains", "PVC/ Rubber Keychains", "Printed Keychains", "Woven Keychains", "Face Masks", "Costom Socks"],
         },
-        designPalcments: {
+        designPalcment: {
             type: String,
             reqiure: true,
             enum: ["Iron On/ Heat Seal", "Velcro (Both Hook & Loop)", "Peel & Stick / Self Adhesive", "Sew On"]
