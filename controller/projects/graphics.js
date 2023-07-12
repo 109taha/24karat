@@ -1,13 +1,22 @@
 const Graphics = require("../../models/projectsSchema/graphicsSchema");
+const Order = require("../../models/orderSchema")
 
 const creatingProjectGraphices = async (req, res) => {
     try {
-        const newProject = new Graphics(req.body);
+        let newProject = new Graphics(req.body);
         if (!newProject) {
             res.status(400).send({ success: false, message: "no data found" })
         };
-        await newProject.save();
-        res.status(200).json({ success: true, newProject });
+        newProject = await newProject.save();
+
+        let newOrder = new Order({ OrderId: newProject.Id, orderType: "Graphices", status: "Pending" });
+        if (!newOrder) {
+            res.status(400).send({ success: false, message: "no data found" })
+        };
+        newProject = await newOrder.save();
+
+        res.status(200).json({ success: true, newOrder });
+
     } catch (err) {
         res.status(500).json(err);
     }

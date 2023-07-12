@@ -63,11 +63,6 @@ const vertorSchema = mongoose.Schema(
         },
         attachArtwork: {
             type: String,
-        },
-        currentStatus: {
-            type: String,
-            enum: ["Pending", "InProcess", "commpleted"],
-            default: ["Pending"]
         }
     },
     { timestamps: true },

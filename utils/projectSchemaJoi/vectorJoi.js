@@ -41,10 +41,7 @@ const degitizingSchema = Joi.object({
     additionalInstructions: Joi.string()
         .required(),
 
-    currentStatus: Joi.string()
-        .valid("Pending", "InProcess", "commpleted")
-        .default("Pending")
-        .required(),
+
 
 }).unknown(true);
 

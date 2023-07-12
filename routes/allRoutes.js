@@ -6,22 +6,22 @@ const router = require("express").Router();
 const verifyUser = require("../middleWares/userVerify")
 const verifyAdmin = require("../middleWares/adminVerify")
 const userSchemaJoi = require("../middleWares/joiMiddleware/userSchemaJoi")
-const validDesignerSchema = require("../middleWares/joiMiddleware/designerSchemaJoi")
-const graphicsJoi = require("../middleWares/joiMiddleware/projectSchema/graphicsJoi")
 const vactorJoi = require("../middleWares/joiMiddleware/projectSchema/vactorJoi")
-const digitizingJoi = require("../middleWares/joiMiddleware/projectSchema/digitizingJoi")
 const patchesJoi = require("../middleWares/joiMiddleware/projectSchema/patchesJoi")
+const graphicsJoi = require("../middleWares/joiMiddleware/projectSchema/graphicsJoi")
+const validDesignerSchema = require("../middleWares/joiMiddleware/designerSchemaJoi")
+const digitizingJoi = require("../middleWares/joiMiddleware/projectSchema/digitizingJoi")
 
 
 //controller
 const { register, login, deleted } = require("../controller/user");
 const { adminRegister, adminlogin } = require("../controller/admin");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
-const { creatingProject, getUserProject, getAllProject, updatedProject } = require("../controller/project");
-const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
 const { creatingProjectVector, getUserProjectvector, getAllProjectVector, updatedProjectVector } = require("../controller/projects/vactor");
-const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
 const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, updatedProjectPatches } = require("../controller/projects/patches");
+const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
+const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
+
 
 
 //router
@@ -44,14 +44,13 @@ router.post("/loginAdmin", adminlogin);
 
 
 //designer
-router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegister);
 router.post("/designer/Login", designerLogin);
 router.delete("/deleteDesigner/:id", designerDelete);
 router.get("/getAllDesginer", verifyAdmin, getAllDesigner);
+router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegister);
 
 
 //project
-
 
 //digitizing
 router.post("/projectDigitizing", digitizingJoi, verifyUser, creatingProjectDigitizing);
