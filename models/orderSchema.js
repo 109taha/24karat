@@ -7,15 +7,17 @@
 const mongoose = require("mongoose");
 
 const orderScheema = new mongoose.Schema({
-    OrderId: {
+    projectId: {
         type: mongoose.Schema.ObjectId,
     },
     orderType: {
         type: String,
+        require: true,
         enum: ["Digitizing", "Graphices", "Patches", "Vactor"]
     },
     status: {
         type: String,
+        require: true,
         enum: ["Pending", "In-Process", "Completed"],
         default: "Pending"
     }

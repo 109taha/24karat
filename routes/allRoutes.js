@@ -81,7 +81,7 @@ router.get("/Patches", verifyAdmin, getAllProjectPatches);
 //asignTask
 router.post("/createTask", verifyAdmin, createTask);
 router.get("/getAllTask", verifyAdmin, getTask);
-// router.get("/getTask/:id", getDesinerOrders)
+router.get("/getTask/:id", getDesinerOrders)
 
 
 module.exports = router;
