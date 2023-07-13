@@ -21,6 +21,7 @@ const { creatingProjectVector, getUserProjectvector, getAllProjectVector, update
 const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, updatedProjectPatches } = require("../controller/projects/patches");
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
+const { createTask, getTask, getDesinerOrders } = require("../controller/asignTask");
 
 
 
@@ -75,6 +76,12 @@ router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 router.get("/Patches/:id", getUserProjectPatches);
 router.get("/Patches", verifyAdmin, getAllProjectPatches);
 // router.put("/updatedPatches", verifyAdmin, updatedProjectPatches);
+
+
+//asignTask
+router.post("/createTask", verifyAdmin, createTask);
+router.get("/getAllTask", verifyAdmin, getTask);
+// router.get("/getTask/:id", getDesinerOrders)
 
 
 module.exports = router;

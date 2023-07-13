@@ -4,7 +4,7 @@ const AsignTask = mongoose.Schema({
     orderId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "project"
+        ref: "order"
     },
     designerId: {
         type: mongoose.Schema.ObjectId,
@@ -16,6 +16,6 @@ const AsignTask = mongoose.Schema({
     }
 }, { timeStamps: true });
 
-const Task = mongoose.Model("TaskAssignTo", AsignTask);
+const Task = mongoose.model("TaskAssignTo", AsignTask);
 
 module.exports = Task;
