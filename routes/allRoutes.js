@@ -22,6 +22,7 @@ const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, upd
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
 const { createTask, getTask, getDesinerOrders } = require("../controller/asignTask");
+const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
 
 
 
@@ -49,6 +50,16 @@ router.post("/designer/Login", designerLogin);
 router.delete("/deleteDesigner/:id", designerDelete);
 router.get("/getAllDesginer", verifyAdmin, getAllDesigner);
 router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegister);
+
+//asignTask
+router.post("/createTask", verifyAdmin, createTask);
+router.get("/getAllTask", verifyAdmin, getTask);
+router.get("/getTask/:id", getDesinerOrders)
+
+//tickets
+router.post("/createTickets", createTickets);
+router.get("/AllTickets", getTickets);
+router.get("/UserTickets/:id", getUserTickets)
 
 
 //project
@@ -78,10 +89,7 @@ router.get("/Patches", verifyAdmin, getAllProjectPatches);
 // router.put("/updatedPatches", verifyAdmin, updatedProjectPatches);
 
 
-//asignTask
-router.post("/createTask", verifyAdmin, createTask);
-router.get("/getAllTask", verifyAdmin, getTask);
-router.get("/getTask/:id", getDesinerOrders)
+
 
 
 module.exports = router;
