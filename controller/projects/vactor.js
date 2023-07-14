@@ -56,4 +56,9 @@ const updatedProjectVector = async (req, res) => {
 }
 
 
-module.exports = { creatingProjectVector, getUserProjectvector, getAllProjectVector, updatedProjectVector };
+module.exports = {
+    creatingProjectVector,
+    getUserProjectvector,
+    updatedProjectVector,
+    getAllProjectVector,
+};

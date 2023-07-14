@@ -117,4 +117,9 @@ const getAllDesigner = (async (req, res) => {
 })
 
 
-module.exports = { designerRegister, designerLogin, designerDelete, getAllDesigner }
+module.exports = {
+    designerRegister,
+    designerLogin,
+    designerDelete,
+    getAllDesigner
+}

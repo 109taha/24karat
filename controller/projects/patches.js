@@ -56,4 +56,9 @@ const updatedProjectPatches = async (req, res) => {
 }
 
 
-module.exports = { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, updatedProjectPatches };
+module.exports = {
+    creatingProjectPatches,
+    getUserProjectPatches,
+    updatedProjectPatches,
+    getAllProjectPatches
+};

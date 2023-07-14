@@ -108,4 +108,8 @@ const deleted = (async (req, res) => {
 });
 
 
-module.exports = { register, login, deleted }
+module.exports = {
+    register,
+    login,
+    deleted
+}

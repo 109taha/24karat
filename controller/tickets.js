@@ -57,4 +57,8 @@ const getUserTickets = async (req, res) => {
 }
 
 
-module.exports = { createTickets, getTickets, getUserTickets }
+module.exports = {
+    createTickets,
+    getTickets,
+    getUserTickets
+}

@@ -60,4 +60,9 @@ const updatedProjectDigitizing = async (req, res) => {
 }
 
 
-module.exports = { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing };
+module.exports = {
+    creatingProjectDigitizing,
+    getUserProjectDigitizing,
+    updatedProjectDigitizing,
+    getAllProjectDigitizing
+};

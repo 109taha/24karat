@@ -57,4 +57,9 @@ const updatedProjectGraphices = async (req, res) => {
 }
 
 
-module.exports = { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices };
+module.exports = {
+    creatingProjectGraphices,
+    getUserProjectGraphices,
+    updatedProjectGraphices,
+    getAllProjectGraphices
+};

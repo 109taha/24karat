@@ -1,9 +1,3 @@
-// {
-//     `orderid`,
-//     'ordertype',
-//     'status'
-// }
-
 const mongoose = require("mongoose");
 
 const orderScheema = new mongoose.Schema({
