@@ -4,6 +4,7 @@ const orderScheema = new mongoose.Schema({
     projectId: {
         type: mongoose.Schema.ObjectId,
     },
+    userId: { type: mongoose.Schema.ObjectId, ref: "user", require: true },
     orderType: {
         type: String,
         require: true,
@@ -12,7 +13,7 @@ const orderScheema = new mongoose.Schema({
     status: {
         type: String,
         require: true,
-        enum: ["Pending", "In-Process", "Completed"],
+        enum: ["Pending", "In-Process", "Completed", "Cancelled"],
         default: "Pending"
     }
 })

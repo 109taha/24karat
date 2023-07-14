@@ -9,7 +9,7 @@ const creatingProjectPatches = async (req, res) => {
         };
         newProject = await newProject.save();
 
-        let newOrder = new Order({ projectId: newProject.id, orderType: "Patches", status: "Pending" });
+        let newOrder = new Order({ projectId: newProject.id, userId: req.body._id, orderType: "Patches", status: "Pending" });
         if (!newOrder) {
             res.status(400).send({ success: false, message: "no data found" })
         };
@@ -40,25 +40,10 @@ const getAllProjectPatches = async (req, res) => {
     }
 };
 
-const updatedProjectPatches = async (req, res) => {
-    try {
-        const updatedProject = await Patches.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
-        );
-        res.status(200).json({ success: true, updatedProject });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-}
 
 
 module.exports = {
     creatingProjectPatches,
     getUserProjectPatches,
-    updatedProjectPatches,
     getAllProjectPatches
 };

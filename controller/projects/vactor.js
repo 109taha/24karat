@@ -40,25 +40,11 @@ const getAllProjectVector = async (req, res) => {
     }
 };
 
-const updatedProjectVector = async (req, res) => {
-    try {
-        const updatedProject = await Vector.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
-        );
-        res.status(200).json({ success: true, updatedProject });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-}
+
 
 
 module.exports = {
     creatingProjectVector,
     getUserProjectvector,
-    updatedProjectVector,
     getAllProjectVector,
 };

@@ -19,10 +19,12 @@ const { adminRegister, adminlogin } = require("../controller/admin");
 const { createTask, getTask, getDesinerOrders } = require("../controller/asignTask");
 const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
-const { creatingProjectVector, getUserProjectvector, getAllProjectVector, updatedProjectVector } = require("../controller/projects/vactor");
-const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, updatedProjectPatches } = require("../controller/projects/patches");
-const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, updatedProjectGraphices } = require("../controller/projects/graphics");
-const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, updatedProjectDigitizing } = require("../controller/projects/digitizing");
+const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = require("../controller/projects/vactor");
+const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
+const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
+const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
+const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder } = require("../controller/order");
+// const { createOrdernumber1 } = require("../controller/testing");
 
 
 
@@ -58,36 +60,41 @@ router.post("/createTask", verifyAdmin, createTask);
 
 //TICKETS
 router.get("/AllTickets", getTickets);
-router.post("/createTickets", createTickets);
+router.post("/createTickets", verifyUser, createTickets);
 router.get("/UserTickets/:id", getUserTickets)
 
 
 //PROJECTS
 
+// router.post("/test", createOrdernumber1);
+
 //Digitizing
 router.get("/digitizing/:id", getUserProjectDigitizing);
 router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
-// router.put("/updatedigitizing", verifyAdmin, updatedProjectDigitizing);
 router.post("/projectDigitizing", digitizingJoi, verifyUser, creatingProjectDigitizing);
 
 //Vector
 router.get("/Vector/:id", getUserProjectvector);
 router.get("/Vector", verifyAdmin, getAllProjectVector);
-// router.put("/updatedVector", verifyAdmin, updatedProjectVector);
 router.post("/projectVector", vactorJoi, verifyUser, creatingProjectVector);
 
 //Graphices
 router.get("/Graphices/:id", getUserProjectGraphices);
 router.get("/Graphices", verifyAdmin, getAllProjectGraphices);
-// router.put("/updatedGraphices", verifyAdmin, updatedProjectGraphices);
 router.post("/projectGraphices", graphicsJoi, verifyUser, creatingProjectGraphices);
 
 //Patches
 router.get("/Patches/:id", getUserProjectPatches);
 router.get("/Patches", verifyAdmin, getAllProjectPatches);
-// router.put("/updatedPatches", verifyAdmin, updatedProjectPatches);
 router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 
+
+//orders
+router.get("/order", verifyAdmin, getAllOrder);
+router.get("/pendingOrder", verifyAdmin, getAllPendingOrder);
+router.get("/inprocessOrder", verifyAdmin, getAllInprocessOrder);
+router.get("/completedOrder", verifyAdmin, getAllCompletedOrder);
+router.get("/cancelledOrder", verifyAdmin, getAllcancelledOrder);
 
 
 

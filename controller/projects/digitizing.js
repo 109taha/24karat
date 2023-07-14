@@ -1,4 +1,3 @@
-const digitizingJoi = require("../../middleWares/joiMiddleware/projectSchema/digitizingJoi");
 const Digitizing = require("../../models/projectsSchema/digitizingSchema");
 const Order = require("../../models/orderSchema.js")
 
@@ -44,25 +43,11 @@ const getAllProjectDigitizing = async (req, res) => {
     }
 };
 
-const updatedProjectDigitizing = async (req, res) => {
-    try {
-        const updatedProject = await Digitizing.findByIdAndUpdate(
-            req.params.id,
-            {
-                $set: req.body,
-            },
-            { new: true }
-        );
-        res.status(200).json({ success: true, updatedProject });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-}
+
 
 
 module.exports = {
     creatingProjectDigitizing,
     getUserProjectDigitizing,
-    updatedProjectDigitizing,
     getAllProjectDigitizing
 };
