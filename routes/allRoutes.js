@@ -24,7 +24,6 @@ const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } =
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder } = require("../controller/order");
-// const { createOrdernumber1 } = require("../controller/testing");
 
 
 
@@ -65,8 +64,6 @@ router.get("/UserTickets/:id", getUserTickets)
 
 
 //PROJECTS
-
-// router.post("/test", createOrdernumber1);
 
 //Digitizing
 router.get("/digitizing/:id", getUserProjectDigitizing);

@@ -1,6 +1,6 @@
 const Digitizing = require("../../models/projectsSchema/digitizingSchema");
-const Order = require("../../models/orderSchema.js")
-
+const Order = require("../../models/orderSchema.js");
+const User = require("../../models/user");
 
 
 const creatingProjectDigitizing = async (req, res) => {
@@ -11,7 +11,7 @@ const creatingProjectDigitizing = async (req, res) => {
         };
         newProject = await newProject.save();
 
-        let newOrder = new Order({ projectId: newProject.id, orderType: "Digitizing", status: "Pending" });
+        let newOrder = new Order({ projectId: newProject.id, orderType: "Digitizing", status: "In-Process" });
         if (!newOrder) {
             res.status(400).send({ success: false, message: "no data found" })
         };
