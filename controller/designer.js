@@ -110,7 +110,10 @@ const designerDelete = (async (req, res) => {
 const getAllDesigner = (async (req, res) => {
     try {
         const allDesigner = await Designer.find()
-        res.status(200).send(allDesigner)
+        if (!allDesigner) {
+            res.status(404).snd({ success: false, message: "No designer found!" })
+        }
+        res.status(200).send({ success: true, allDesigner })
     } catch (err) {
         res.status(500).send("something went wrong")
     }

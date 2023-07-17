@@ -10,7 +10,7 @@ const creatingProjectGraphices = async (req, res) => {
         };
         newProject = await newProject.save();
 
-        let newOrder = new Order({ projectId: newProject.id, orderType: "Graphices", status: "Pending" });
+        let newOrder = new Order({ projectId: newProject.id, userId: newProject.userId, orderType: "Graphices", status: "Pending" });
         if (!newOrder) {
             res.status(400).send({ success: false, message: "no data found" })
         };

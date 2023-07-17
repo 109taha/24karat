@@ -10,7 +10,7 @@ const creatingProjectPatches = async (req, res) => {
         };
         newProject = await newProject.save();
 
-        let newOrder = new Order({ projectId: newProject.id, userId: req.body._id, orderType: "Patches", status: "Pending" });
+        let newOrder = new Order({ projectId: newProject.id, userId: newProject.userId, userId: req.body._id, orderType: "Patches", status: "Pending" });
         if (!newOrder) {
             res.status(400).send({ success: false, message: "no data found" })
         };

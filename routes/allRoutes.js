@@ -23,7 +23,8 @@ const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = req
 const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
-const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder } = require("../controller/order");
+const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
+const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
 
 
 
@@ -63,6 +64,12 @@ router.post("/createTickets", verifyUser, createTickets);
 router.get("/UserTickets/:id", getUserTickets)
 
 
+//Estimate
+router.post("/EstimateReq", verifyUser, patchesJoi, creatingEstimateRequest);
+router.get("/AllEstimate", verifyAdmin, getAllEstimate);
+router.post("/Response", verifyAdmin, AdminResponse)
+
+
 //PROJECTS
 
 //Digitizing
@@ -86,13 +93,16 @@ router.get("/Patches", verifyAdmin, getAllProjectPatches);
 router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 
 
-//orders
+//orders get by admin
 router.get("/order", verifyAdmin, getAllOrder);
 router.get("/pendingOrder", verifyAdmin, getAllPendingOrder);
 router.get("/inprocessOrder", verifyAdmin, getAllInprocessOrder);
 router.get("/completedOrder", verifyAdmin, getAllCompletedOrder);
 router.get("/cancelledOrder", verifyAdmin, getAllcancelledOrder);
 
+
+//order get by User
+router.get("/OrderUser/:id", getUserAllOrder)
 
 
 

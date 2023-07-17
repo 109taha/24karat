@@ -9,7 +9,6 @@ const createTickets = async (req, res) => {
             return res.send(404).send("need an order for the ticket")
         };
         const tickets = new Ticket(req.body);
-        console.log(tickets)
         const { Subject, Priorty, Message } = req.body
         if (!Subject) {
             return res.status(404).send("need an Sucject for the ticket")
@@ -33,6 +32,9 @@ const createTickets = async (req, res) => {
 const getTickets = async (req, res) => {
     try {
         const tickets = await Ticket.find()
+        if (!tickets) {
+            res.status(404).snd({ success: false, message: "No Tickets Found!" });
+        };
         res.status(200).send({ success: true, tickets })
     } catch (error) {
         res.status(500).send({
@@ -46,7 +48,10 @@ const getTickets = async (req, res) => {
 const getUserTickets = async (req, res) => {
     try {
         const userID = req.params.id;
-        const tickets = await find({ userID })
+        const tickets = await Ticket.find({ userID })
+        if (!tickets) {
+            res.status(400).send({ success: false, message: "no tickets found!" })
+        }
         res.status(200).send({ success: true, tickets })
     } catch (err) {
         res.status(500).send({

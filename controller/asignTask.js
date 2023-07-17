@@ -8,7 +8,7 @@ const createTask = async (req, res) => {
     try {
 
         const orderId = await Order.findById(req.body.orderId)
-        console.log(orderId)
+        const update = await orderId.updateOne({ status: "In-Process" })
         if (!orderId) {
             return res.status(400).json({ success: false, message: "No Order Found With Given Id!" })
         }
@@ -16,7 +16,6 @@ const createTask = async (req, res) => {
         console.log(designerId)
         if (!designerId) {
             return res.status(400).json({ success: false, message: "No Desginer Found With Given Id!" })
-
         }
         const result = new Task(req.body);
         await result.save()
@@ -32,6 +31,9 @@ const createTask = async (req, res) => {
 const getTask = async (req, res) => {
     try {
         const result = await Task.find()
+        if (!result) {
+            res.status(404).snd({ success: false, message: "No Task found!" })
+        }
         res.status(200).json({ success: true, result })
     } catch (err) {
         res.status(500).json({ success: false, message: "someThing Went Wrong!" })
@@ -44,7 +46,14 @@ const getTask = async (req, res) => {
 const getDesinerOrders = async (req, res) => {
     try {
         const userId = req.params.id;
+        if (!userId) {
+            res.status(404).snd({ success: false, message: "No User-Id found!" })
+        }
         const project = await Task.find({ userId });
+        if (!project) {
+            res.status(404).snd({ success: false, message: "No Task found! on this User" })
+        }
+
         res.status(200).json({ success: true, project });
     } catch (err) {
         res.status(500).json(err);
