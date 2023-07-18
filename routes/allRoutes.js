@@ -24,7 +24,7 @@ const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } =
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
-const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
+const { creatingEstimateRequest, getAllEstimate, AdminResponse, sendmail } = require("../controller/estimate");
 
 
 
@@ -67,7 +67,8 @@ router.get("/UserTickets/:id", getUserTickets)
 //Estimate
 router.post("/EstimateReq", verifyUser, patchesJoi, creatingEstimateRequest);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
-router.post("/Response", verifyAdmin, AdminResponse)
+router.post("/Response", verifyAdmin, AdminResponse);
+// router.get("/sendmail", sendmail)
 
 
 //PROJECTS
