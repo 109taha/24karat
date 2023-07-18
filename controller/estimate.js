@@ -1,5 +1,6 @@
 const Estimate = require("../models/estimate");
 const EsAdmin = require("../models/estimateAdmin");
+const sendEmail = require("../helper/nodeMalier")
 
 const creatingEstimateRequest = async (req, res) => {
     try {
@@ -42,11 +43,12 @@ const getAllEstimate = async (req, res) => {
     }
 }
 
+
+
 const AdminResponse = async (req, res) => {
     try {
         // const estimateRes = await Estimate.find().populate('EstimateId')
         const response = await new EsAdmin(req.body).populate({ path: 'EstimateId', select: 'DesignName type' })
-        console.log(response);
         if (!response) {
             res.status(404).send({
                 success: false,
@@ -59,6 +61,7 @@ const AdminResponse = async (req, res) => {
             response
         })
 
+
     } catch (error) {
         res.status(500).send({
             success: false, message: "SomeThing Went Wrong!"
@@ -66,5 +69,11 @@ const AdminResponse = async (req, res) => {
     }
 }
 
+// const sendmail = async (req, res) => {
+//     const data = await EsAdmin.find();
+//     const email = await Estimate.find().populate('userId');
+//     console.log("email:", email)
+// }
 
-module.exports = { creatingEstimateRequest, getAllEstimate, AdminResponse }
+
+module.exports = { creatingEstimateRequest, getAllEstimate, AdminResponse, sendmail }
