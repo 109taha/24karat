@@ -1,6 +1,7 @@
 const Estimate = require("../models/estimate");
 const EsAdmin = require("../models/estimateAdmin");
-const sendEmail = require("../helper/nodeMalier")
+const sendEmail = require("../helper/nodeMalier");
+const User = require("../models/user");
 
 const creatingEstimateRequest = async (req, res) => {
     try {
@@ -47,33 +48,39 @@ const getAllEstimate = async (req, res) => {
 
 const AdminResponse = async (req, res) => {
     try {
-        // const estimateRes = await Estimate.find().populate('EstimateId')
-        const response = await new EsAdmin(req.body).populate({ path: 'EstimateId', select: 'DesignName type' })
+        const response = await new EsAdmin(req.body).populate({
+            path:
+                'EstimateId',
+            select:
+                'DesignName type userId'
+        });
+        // const response = await new EsAdmin()
+
         if (!response) {
             res.status(404).send({
                 success: false,
                 message: "no data found"
             })
         };
+
+        const requestPerson = await User.find({ _id: response.EstimateId.userId });
+        const name = requestPerson[0].firstname;
+        const userEmail = requestPerson[0].email;
+
+        const data = response;
+        const mail = sendEmail({ name, userEmail, data });
+        console.log(mail)
+
         await response.save()
         res.status(200).send({
             success: true,
             response
         })
-
-
     } catch (error) {
         res.status(500).send({
-            success: false, message: "SomeThing Went Wrong!"
+            success: false, message: "SomeThing Went Wrong!", error
         })
     }
 }
 
-// const sendmail = async (req, res) => {
-//     const data = await EsAdmin.find();
-//     const email = await Estimate.find().populate('userId');
-//     console.log("email:", email)
-// }
-
-
-module.exports = { creatingEstimateRequest, getAllEstimate, AdminResponse, sendmail }
+module.exports = { creatingEstimateRequest, getAllEstimate, AdminResponse }
