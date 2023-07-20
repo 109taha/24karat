@@ -31,8 +31,8 @@ const createTask = async (req, res) => {
 const getTask = async (req, res) => {
     try {
         const result = await Task.find()
-        if (!result) {
-            res.status(404).snd({ success: false, message: "No Task found!" })
+        if (!result.lenght > 0) {
+            return res.status(404).snd({ success: false, message: "No Task found!" })
         }
         res.status(200).json({ success: true, result })
     } catch (err) {
@@ -46,12 +46,9 @@ const getTask = async (req, res) => {
 const getDesinerOrders = async (req, res) => {
     try {
         const userId = req.params.id;
-        if (!userId) {
-            res.status(404).snd({ success: false, message: "No User-Id found!" })
-        }
-        const project = await Task.find({ userId });
-        if (!project) {
-            res.status(404).snd({ success: false, message: "No Task found! on this User" })
+        const project = await Task.find({});
+        if (!project.length > 0) {
+            return res.status(404).snd({ success: false, message: "No Task found! on this User" })
         }
 
         res.status(200).json({ success: true, project });

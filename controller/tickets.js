@@ -32,7 +32,7 @@ const createTickets = async (req, res) => {
 const getTickets = async (req, res) => {
     try {
         const tickets = await Ticket.find()
-        if (!tickets) {
+        if (!tickets.length > 0) {
             res.status(404).snd({ success: false, message: "No Tickets Found!" });
         };
         res.status(200).send({ success: true, tickets })
@@ -49,8 +49,8 @@ const getUserTickets = async (req, res) => {
     try {
         const userID = req.params.id;
         const tickets = await Ticket.find({ userID })
-        if (!tickets) {
-            res.status(400).send({ success: false, message: "no tickets found!" })
+        if (!tickets.length > 0) {
+            res.status(404).send({ success: false, message: "no tickets found!" })
         }
         res.status(200).send({ success: true, tickets })
     } catch (err) {

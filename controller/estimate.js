@@ -28,9 +28,8 @@ const creatingEstimateRequest = async (req, res) => {
 const getAllEstimate = async (req, res) => {
     try {
         const allEstimate = await Estimate.find()
-        console.log("estimate", allEstimate)
         if (!allEstimate > 0) {
-            res.status(404).send({
+            return res.status(404).send({
                 success: false,
                 message: "no data found"
             })
@@ -57,24 +56,36 @@ const AdminResponse = async (req, res) => {
         // const response = await new EsAdmin()
 
         if (!response) {
-            res.status(404).send({
+            return res.status(404).send({
                 success: false,
                 message: "no data found"
             })
         };
 
+        // console.log(response);
+
         const requestPerson = await User.find({ _id: response.EstimateId.userId });
-        const name = requestPerson[0].firstname;
+        const name = requestPerson[0].firstname + " " + requestPerson[0].lastname;
         const userEmail = requestPerson[0].email;
+        const Id = requestPerson[0]._id
+        // console.log("name:", name)
+        // console.log("email:", userEmail)
+        // console.log("Id:", Id)
+        const DesignName = response.EstimateId.DesignName
+        const type = response.EstimateId.type
+        const prices = response.prices
+        const timeDuration = response.timeDuration
+        // console.log(timeDuration)
+        // console.log(prices)
+        // console.log(DesignName)
+        // console.log(type)
 
-        const data = response;
-        const mail = sendEmail({ name, userEmail, data });
-        console.log(mail)
-
+        const mail = sendEmail(name, userEmail, Id, DesignName, type, prices, timeDuration);
+        // console.log(mail)
         await response.save()
         res.status(200).send({
             success: true,
-            response
+            response,
         })
     } catch (error) {
         res.status(500).send({

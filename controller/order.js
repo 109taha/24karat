@@ -4,10 +4,7 @@ const getAllCompletedOrder = async (req, res, next) => {
     try {
         const order = await Order.find({ status: "Completed" })
         if (!order.length > 0) {
-            res.send({
-                message: "you dont have any orders",
-                status: 404
-            })
+            return res.status(404).send({ success: false, message: "no Completed order found!" });
         }
         res.send({
             total: order.length,
@@ -24,7 +21,7 @@ const getAllInprocessOrder = async (req, res) => {
     try {
         const order = await Order.find({ status: "In-Process" })
         if (!order.length > 0) {
-            res.status(404).send({ success: false, message: "no In-Process order found!" });
+            return res.status(404).send({ success: false, message: "no In-Process order found!" });
         }
         res.status(200).send({ success: false, order });
     } catch (err) {
@@ -36,7 +33,7 @@ const getAllPendingOrder = async (req, res) => {
     try {
         const order = await Order.find({ status: "Pending" })
         if (!order.length > 0) {
-            res.status(404).send({ success: false, message: "no Pending order found!" });
+            return res.status(404).send({ success: false, message: "no Pending order found!" });
         }
         res.status(200).send({ success: false, order });
     } catch (err) {
@@ -48,7 +45,7 @@ const getAllOrder = async (req, res) => {
     try {
         const order = await Order.find()
         if (!order.length > 0) {
-            res.status(404).send({ success: false, message: "no order found!" });
+            return res.status(404).send({ success: false, message: "no order found!" });
         }
         res.status(200).send({ success: false, order });
     } catch (err) {
@@ -60,7 +57,7 @@ const getAllcancelledOrder = async (req, res) => {
     try {
         const order = await Order.find({ status: "Cancelled" })
         if (!order.length > 0) {
-            res.status(404).send({ success: false, message: "no Cancelled order found!" });
+            return res.status(404).send({ success: false, message: "no Cancelled order found!" });
         }
         res.status(200).send({ success: false, order });
     } catch (err) {
@@ -75,7 +72,7 @@ const getUserAllOrder = async (req, res) => {
         const userId = req.params.id;
         const order = await Order.find({ userId })
         if (!order.length > 0) {
-            res.status(404).send({ success: false, message: "no order found!" });
+            return res.status(404).send({ success: false, message: "no order found!" });
         }
         res.status(200).send({ success: true, order });
     } catch (err) {

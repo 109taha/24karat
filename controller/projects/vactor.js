@@ -6,15 +6,15 @@ const creatingProjectVector = async (req, res) => {
     try {
         let newProject = new Vector(req.body);
         if (!newProject) {
-            res.status(400).send({ success: false, message: "no data found" })
+            return res.status(400).send({ success: false, message: "no data found" })
         };
         newProject = await newProject.save();
 
         let newOrder = new Order({ projectId: newProject.id, userId: newProject.userId, orderType: "Vactor", status: "Pending" });
         if (!newOrder) {
-            res.status(400).send({ success: false, message: "no data found" })
+            return res.status(400).send({ success: false, message: "no data found" })
         };
-        newProject = await newOrder.save();
+        newProject = await newOrder.save()
 
         res.status(200).json({ success: true, newOrder });
     } catch (err) {
@@ -26,6 +26,9 @@ const getUserProjectvector = async (req, res) => {
     try {
         const userId = req.params.id;
         const project = await Vector.find({ userId });
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+        }
         res.status(200).json({ success: true, project });
     } catch (err) {
         res.status(500).json(err);
@@ -35,6 +38,9 @@ const getUserProjectvector = async (req, res) => {
 const getAllProjectVector = async (req, res) => {
     try {
         const project = await Vector.find()
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+        }
         res.status(200).json({ success: true, project })
     } catch (err) {
         res.status(500).json(err)

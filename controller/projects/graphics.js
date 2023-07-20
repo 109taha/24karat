@@ -27,6 +27,9 @@ const getUserProjectGraphices = async (req, res) => {
     try {
         const userId = req.params.id;
         const project = await Graphics.find({ userId });
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+        }
         res.status(200).json({ success: true, project });
     } catch (err) {
         res.status(500).json(err);
@@ -36,6 +39,9 @@ const getUserProjectGraphices = async (req, res) => {
 const getAllProjectGraphices = async (req, res) => {
     try {
         const project = await Graphics.find()
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+        }
         res.status(200).json({ success: true, project })
     } catch (err) {
         res.status(500).json(err)

@@ -7,13 +7,13 @@ const creatingProjectDigitizing = async (req, res) => {
     try {
         let newProject = new Digitizing(req.body);
         if (!newProject) {
-            res.status(400).send({ success: false, message: "no data found" })
+            return res.status(400).send({ success: false, message: "no data found" })
         };
         newProject = await newProject.save();
 
-        let newOrder = new Order({ projectId: newProject.id, userId: newProject.userId, orderType: "Digitizing", status: "Completed" });
+        let newOrder = new Order({ projectId: newProject.id, userId: newProject.userId, orderType: "Digitizing", status: "Pending" });
         if (!newOrder) {
-            res.status(400).send({ success: false, message: "no data found" })
+            return res.status(400).send({ success: false, message: "no data found" })
         };
         newProject = await newOrder.save();
 
@@ -28,15 +28,21 @@ const getUserProjectDigitizing = async (req, res) => {
     try {
         const userId = req.params.id;
         const project = await Digitizing.find({ userId });
-        res.status(200).json({ success: true, project });
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "No Digitizing Found!" })
+        }
+        res.status(200).send({ success: true, project });
     } catch (err) {
-        res.status(500).json(err);
+        res.status(500).send(err);
     }
 };
 
 const getAllProjectDigitizing = async (req, res) => {
     try {
         const project = await Digitizing.find()
+        if (!project.length > 0) {
+            return res.status(400).send({ success: false, message: "No Digitizing Found!" })
+        }
         res.status(200).json({ success: true, project })
     } catch (err) {
         res.status(500).json(err)
