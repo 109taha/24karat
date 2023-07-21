@@ -3,6 +3,13 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
+
+
+// body parser
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+
 //routes
 const route = require('./routes/allRoutes');
 
