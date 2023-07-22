@@ -27,7 +27,10 @@ const creatingProjectVector = async (req, res) => {
                 console.log(err)
             }
         }
-        let newProject = new Vector(req.body);
+        let newProject = new Digitizing({
+            ...req.body,
+            attachArtwork: attachArtwork[0].url,
+        });
         if (!newProject) {
             return res.status(400).send({ success: false, message: "no data found" })
         };

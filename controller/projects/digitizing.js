@@ -28,9 +28,10 @@ const creatingProjectDigitizing = async (req, res) => {
                 console.log(err)
             }
         }
-        console.log(attachArtwork)
-        let newProject = new Digitizing(req.body);
-        console.log(newProject)
+        let newProject = new Digitizing({
+            ...req.body,
+            attachArtwork: attachArtwork[0].url,
+        });
         if (!newProject) {
             return res.status(400).send({ success: false, message: "no data found" })
         };
