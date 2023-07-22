@@ -11,6 +11,7 @@ const patchesJoi = require("../middleWares/joiMiddleware/projectSchema/patchesJo
 const graphicsJoi = require("../middleWares/joiMiddleware/projectSchema/graphicsJoi");
 const validDesignerSchema = require("../middleWares/joiMiddleware/designerSchemaJoi");
 const digitizingJoi = require("../middleWares/joiMiddleware/projectSchema/digitizingJoi");
+const upload = require("../helper/multer")
 
 
 //controller
@@ -26,7 +27,6 @@ const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigiti
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
 const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
 const picUpload = require("../controller/picUpload");
-const upload = require("../helper/multer")
 
 
 
@@ -72,31 +72,29 @@ router.get("/AllEstimate", verifyAdmin, getAllEstimate);
 router.post("/Response", verifyAdmin, AdminResponse);
 
 
-
-//pics
-router.post('/upload', upload('image'), picUpload)
+router.post("/picUpload", upload.array("images", 5), picUpload)
 
 //PROJECTS
 
 //Digitizing
 router.get("/digitizing/:id", getUserProjectDigitizing);
 router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
-router.post("/projectDigitizing", digitizingJoi, verifyUser, creatingProjectDigitizing);
+router.post("/projectDigitizing", upload.array("attachArtwork", 5), digitizingJoi, verifyUser, creatingProjectDigitizing);
 
 //Vector
 router.get("/Vector/:id", getUserProjectvector);
 router.get("/Vector", verifyAdmin, getAllProjectVector);
-router.post("/projectVector", vactorJoi, verifyUser, creatingProjectVector);
+router.post("/projectVector", upload.array("attachArtwork", 5), vactorJoi, verifyUser, creatingProjectVector);
 
 //Graphices
 router.get("/Graphices/:id", getUserProjectGraphices);
 router.get("/Graphices", verifyAdmin, getAllProjectGraphices);
-router.post("/projectGraphices", graphicsJoi, verifyUser, creatingProjectGraphices);
+router.post("/projectGraphices", upload.array("attachArtwork", 5), graphicsJoi, verifyUser, creatingProjectGraphices);
 
-//Patches
-router.get("/Patches/:id", getUserProjectPatches);
-router.get("/Patches", verifyAdmin, getAllProjectPatches);
-router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
+// //Patches
+// router.get("/Patches/:id", getUserProjectPatches);
+// router.get("/Patches", verifyAdmin, getAllProjectPatches);
+// router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 
 
 //orders get by admin

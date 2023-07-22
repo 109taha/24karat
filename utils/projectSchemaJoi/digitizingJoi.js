@@ -89,7 +89,8 @@ const degitizingSchema = Joi.object({
     additionalInstructions: Joi.string()
         .required(),
 
+    attachArtwork: Joi.string(),
 
-}).unknown(true);
+}).unknown(false);
 
 module.exports = degitizingSchema
