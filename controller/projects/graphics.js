@@ -29,7 +29,7 @@ const creatingProjectGraphices = async (req, res) => {
                 console.log(err)
             }
         }
-        let newProject = new Digitizing({
+        let newProject = new Graphics({
             ...req.body,
             attachArtwork: attachArtwork[0].url,
         });

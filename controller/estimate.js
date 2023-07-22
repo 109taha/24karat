@@ -2,10 +2,38 @@ const Estimate = require("../models/estimate");
 const EsAdmin = require("../models/estimateAdmin");
 const sendEmail = require("../helper/nodeMalier");
 const User = require("../models/user");
+const cloudinary = require('../helper/cloudinary')
+const fs = require("fs");
 
 const creatingEstimateRequest = async (req, res) => {
+    const files = req.files;
+    const attachArtwork = [];
     try {
-        const newEstimate = new Estimate(req.body)
+
+        if (!files || files?.length < 1)
+            return res.status(401).json({
+                success: false,
+                message: "You have to upload at least one image to the listing",
+            });
+        for (const file of files) {
+            const { path } = file;
+            try {
+                const uploader = await cloudinary.uploader.upload(path, { folder: "24-Karat" });
+                attachArtwork.push({ url: uploader.url });
+                fs.unlinkSync(path);
+            } catch (err) {
+                if (attachArtwork?.length) {
+                    const imgs = imgObjs.map((obj) => obj.public_id);
+                    cloudinary.api.delete_resources(imgs);
+                }
+                console.log(err)
+            }
+        }
+        const newEstimate = new Estimate({
+            ...req.body,
+            attachArtwork: attachArtwork[0].url
+        })
+        console.log(newEstimate)
         if (!newEstimate) {
             res.status(404).send({
                 success: false,

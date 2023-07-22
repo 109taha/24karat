@@ -21,7 +21,7 @@ const { createTask, getTask, getDesinerOrders } = require("../controller/asignTa
 const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
 const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = require("../controller/projects/vactor");
-const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
+// const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
 const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
@@ -67,12 +67,12 @@ router.get("/UserTickets/:id", getUserTickets)
 
 
 //Estimate
-router.post("/EstimateReq", verifyUser, patchesJoi, creatingEstimateRequest);
-router.get("/AllEstimate", verifyAdmin, getAllEstimate);
 router.post("/Response", verifyAdmin, AdminResponse);
+router.get("/AllEstimate", verifyAdmin, getAllEstimate);
+router.post("/EstimateReq", upload.array("attachArtwork", 5), verifyUser, patchesJoi, creatingEstimateRequest);
 
 
-router.post("/picUpload", upload.array("images", 5), picUpload)
+router.post("/picUpload", upload.array("attachArtwork", 5), picUpload)
 
 //PROJECTS
 

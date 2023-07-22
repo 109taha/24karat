@@ -24,6 +24,8 @@ const graphicsSchema = Joi.object({
         .required(),
 
 
+    attachArtwork: Joi.string(),
+
 
 }).unknown(true);
 

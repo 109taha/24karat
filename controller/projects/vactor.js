@@ -27,7 +27,7 @@ const creatingProjectVector = async (req, res) => {
                 console.log(err)
             }
         }
-        let newProject = new Digitizing({
+        let newProject = new Vector({
             ...req.body,
             attachArtwork: attachArtwork[0].url,
         });
@@ -40,12 +40,13 @@ const creatingProjectVector = async (req, res) => {
         if (!newOrder) {
             return res.status(400).send({ success: false, message: "no data found" })
         };
-        newProject = await newOrder.save()
-
+        newProject = await newOrder.save();
         res.status(200).json({ success: true, newOrder });
+
     } catch (err) {
         res.status(500).json(err);
     }
+
 };
 
 const getUserProjectvector = async (req, res) => {
