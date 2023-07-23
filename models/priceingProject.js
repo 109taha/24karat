@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const CompletedOrderSchema = mongoose.Schema({
+const PriceingProjectSchema = mongoose.Schema({
     TaskId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "taskAssign"
+        ref: "TaskAssign"
     },
     Instruction: {
         type: String,
@@ -13,8 +13,11 @@ const CompletedOrderSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    prices: {
+        type: Number,
+    }
 }, { timeStamps: true });
 
-const OrderCompleted = mongoose.model("orderCompleted", CompletedOrderSchema);
+const princes = mongoose.model("PriceingProject", PriceingProjectSchema);
 
-module.exports = OrderCompleted;
+module.exports = princes;

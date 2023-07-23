@@ -1,10 +1,11 @@
+const { number } = require("joi");
 const mongoose = require("mongoose");
 
 const CompletedOrderSchema = mongoose.Schema({
-    TaskId: {
+    completedOrderId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "taskAssign"
+        ref: "orders"
     },
     Instruction: {
         type: String,
@@ -13,6 +14,11 @@ const CompletedOrderSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    prices: {
+        type: Number,
+        require: true,
+    }
+
 }, { timeStamps: true });
 
 const OrderCompleted = mongoose.model("orderCompleted", CompletedOrderSchema);

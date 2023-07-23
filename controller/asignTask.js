@@ -4,6 +4,8 @@ const Order = require("../models/orderSchema")
 const ProjectRep = require("../models/projectComplete")
 const cloudinary = require('../helper/cloudinary')
 const fs = require("fs");
+const PriceProject = require("../models/priceingProject");
+const OrderCompleted = require("../models/projectComplete");
 
 //create task
 const createTask = async (req, res) => {
@@ -68,6 +70,31 @@ const projectRep = async (req, res) => {
     }
 }
 
+const adminSendToUser = async (req, res) => {
+    try {
+        const prices = new PriceProject(req.body)
+        if (!prices) {
+            res.status(400).send({
+                success: false,
+                message: "you have to add prices first!"
+            })
+        }
+        const artwork = await PriceProject.find({ attachArtwork })
+        console.log(artwork)
+        res.status(200).send({
+            success: true,
+            message: "priceing added successfully",
+            prices
+        })
+        console.log(prices)
+    } catch (err) {
+        res.status(500).send({
+            success: false,
+            message: "something Went Wrong"
+        })
+    }
+}
+
 
 //get all task
 const getTask = async (req, res) => {
@@ -104,4 +131,5 @@ module.exports = {
     createTask,
     getDesinerOrders,
     projectRep,
+    adminSendToUser
 }

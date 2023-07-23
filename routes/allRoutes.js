@@ -17,7 +17,7 @@ const upload = require("../helper/multer")
 //controller
 const { register, login, deleted } = require("../controller/user");
 const { adminRegister, adminlogin } = require("../controller/admin");
-const { createTask, getTask, getDesinerOrders, projectRep } = require("../controller/asignTask");
+const { createTask, getTask, getDesinerOrders, projectRep, adminSendToUser } = require("../controller/asignTask");
 const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
 const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = require("../controller/projects/vactor");
@@ -60,6 +60,7 @@ router.get("/getTask/:id", getDesinerOrders);
 router.get("/getAllTask", verifyAdmin, getTask);
 router.post("/createTask", verifyAdmin, createTask);
 router.post("/desginerRep", upload.array("attachArtwork", 5), projectRep)
+router.post("/prices", upload.array("attachArtwork", 5), adminSendToUser)
 
 //TICKETS
 router.get("/AllTickets", getTickets);
@@ -72,7 +73,7 @@ router.post("/Response", verifyAdmin, AdminResponse);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
 router.post("/EstimateReq", upload.array("attachArtwork", 5), verifyUser, patchesJoi, creatingEstimateRequest);
 
-
+//pic upload
 router.post("/picUpload", upload.array("attachArtwork", 5), picUpload)
 
 //PROJECTS

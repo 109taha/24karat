@@ -17,6 +17,6 @@ const AsignTask = mongoose.Schema({
 
 }, { timeStamps: true });
 
-const Task = mongoose.model("TaskAssignTo", AsignTask);
+const Task = mongoose.model("TaskAssign", AsignTask);
 
 module.exports = Task;
