@@ -17,7 +17,7 @@ const upload = require("../helper/multer")
 //controller
 const { register, login, deleted } = require("../controller/user");
 const { adminRegister, adminlogin } = require("../controller/admin");
-const { createTask, getTask, getDesinerOrders } = require("../controller/asignTask");
+const { createTask, getTask, getDesinerOrders, projectRep } = require("../controller/asignTask");
 const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
 const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
 const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = require("../controller/projects/vactor");
@@ -59,6 +59,7 @@ router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegi
 router.get("/getTask/:id", getDesinerOrders);
 router.get("/getAllTask", verifyAdmin, getTask);
 router.post("/createTask", verifyAdmin, createTask);
+router.post("/desginerRep", upload.array("attachArtwork", 5), projectRep)
 
 //TICKETS
 router.get("/AllTickets", getTickets);
