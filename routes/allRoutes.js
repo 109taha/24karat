@@ -27,15 +27,16 @@ const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigiti
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
 const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
 const picUpload = require("../controller/picUpload");
+const { renderBuyPage, payment, success, failure } = require("../controller/paymentController");
 
 
 
 //router
 
 //homepage
-router.get("/", (req, res) => {
-    res.send("hello world!");
-});
+// router.get("/", (req, res) => {
+//     res.send("hello world!");
+// });
 
 
 //USER
@@ -59,7 +60,7 @@ router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegi
 router.get("/getTask/:id", getDesinerOrders);
 router.get("/getAllTask", verifyAdmin, getTask);
 router.post("/createTask", verifyAdmin, createTask);
-router.post("/desginerRep", upload.array("attachArtwork", 5), projectRep)
+router.post("/desginerRep/:id", upload.array("attachArtwork", 5), projectRep)
 router.post("/prices", upload.array("attachArtwork", 5), adminSendToUser)
 
 //TICKETS
@@ -72,6 +73,12 @@ router.get("/UserTickets/:id", getUserTickets)
 router.post("/Response", verifyAdmin, AdminResponse);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
 router.post("/EstimateReq", upload.array("attachArtwork", 5), verifyUser, patchesJoi, creatingEstimateRequest);
+
+// payment
+router.get('/', renderBuyPage);
+router.post('/payment', payment);
+router.get('/success', success);
+router.get('/failure', failure);
 
 //pic upload
 router.post("/picUpload", upload.array("attachArtwork", 5), picUpload)
@@ -112,4 +119,4 @@ router.get("/OrderUser/:id", getUserAllOrder)
 
 
 
-module.exports = router;
+module.exports = router; 

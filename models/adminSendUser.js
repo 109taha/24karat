@@ -5,7 +5,7 @@ const CompletedOrderSchema = mongoose.Schema({
     completedOrderId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "orders"
+        ref: "Order"
     },
     Instruction: {
         type: String,

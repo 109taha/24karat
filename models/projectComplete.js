@@ -6,6 +6,11 @@ const CompletedOrderSchema = mongoose.Schema({
         require: true,
         ref: "taskAssign"
     },
+    designerId: {
+        type: mongoose.Schema.ObjectId,
+        require: true,
+        ref: "designer"
+    },
     Instruction: {
         type: String,
     },
@@ -13,7 +18,8 @@ const CompletedOrderSchema = mongoose.Schema({
         type: String,
         require: true,
     },
-}, { timeStamps: true });
+}, { timestamps: true },
+)
 
 const OrderCompleted = mongoose.model("orderCompleted", CompletedOrderSchema);
 

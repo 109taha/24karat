@@ -54,7 +54,7 @@ const getUserProjectvector = async (req, res) => {
         const userId = req.params.id;
         const project = await Vector.find({ userId });
         if (!project.length > 0) {
-            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+            return res.status(400).send({ success: false, message: "no vactor Found!" })
         }
         res.status(200).json({ success: true, project });
     } catch (err) {
@@ -66,7 +66,7 @@ const getAllProjectVector = async (req, res) => {
     try {
         const project = await Vector.find()
         if (!project.length > 0) {
-            return res.status(400).send({ success: false, message: "no Graphics Found!" })
+            return res.status(400).send({ success: false, message: "no vactor Found!" })
         }
         res.status(200).json({ success: true, project })
     } catch (err) {

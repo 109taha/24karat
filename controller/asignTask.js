@@ -5,7 +5,11 @@ const ProjectRep = require("../models/projectComplete")
 const cloudinary = require('../helper/cloudinary')
 const fs = require("fs");
 const PriceProject = require("../models/priceingProject");
-const OrderCompleted = require("../models/projectComplete");
+const User = require("../models/user");
+const { STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY } = process.env;
+
+const stripe = require('stripe')(STRIPE_SECRET_KEY)
+
 
 //create task
 const createTask = async (req, res) => {
@@ -32,7 +36,7 @@ const createTask = async (req, res) => {
 //OrderCompleted
 const projectRep = async (req, res) => {
     try {
-
+        const designerId = req.params.id
         const TaskId = await Task.findById(req.body.TaskId)
         // const update = await orderId.updateOne({ status: "In-Process" })
         if (!TaskId) {
@@ -40,7 +44,6 @@ const projectRep = async (req, res) => {
         }
         const files = req.files;
         const attachArtwork = [];
-
         if (!files || files?.length < 1)
             return res.status(401).json({
                 success: false,
@@ -61,7 +64,8 @@ const projectRep = async (req, res) => {
                 console.log(err)
             }
         };
-        const result = new ProjectRep({ ...req.body, attachArtwork: attachArtwork[0].url });
+        const result = new ProjectRep({ ...req.body, attachArtwork: attachArtwork[0].url, designerId: designerId });
+        console.log(result)
         await result.save()
         res.status(200).json({ success: true, message: "task has been assign to designer ", result })
 
@@ -72,21 +76,58 @@ const projectRep = async (req, res) => {
 
 const adminSendToUser = async (req, res) => {
     try {
-        const prices = new PriceProject(req.body)
+        const prices = (req.body.prices)
         if (!prices) {
             res.status(400).send({
                 success: false,
                 message: "you have to add prices first!"
             })
         }
-        const artwork = await PriceProject.find({ attachArtwork })
-        console.log(artwork)
-        res.status(200).send({
-            success: true,
-            message: "priceing added successfully",
-            prices
-        })
-        console.log(prices)
+        const task = new PriceProject(req.body)
+
+
+
+
+
+            .then((renderBuyPage) => {
+                res.render('buy', {
+                    key: STRIPE_PUBLISHABLE_KEY,
+                    amount: prices
+                })
+            })
+
+
+            .then((payment) => {
+                stripe.customers.create({
+                    email: req.body.stripeEmail,
+                    source: req.body.stripeToken,
+                    name: 'Mirth',
+                    address: {
+                        line1: '40 W 4th St',
+                        postal_code: '10012',
+                        city: 'New York',
+                        state: 'NY 10012',
+                        country: 'USA',
+                    }
+                })
+                    .then((user) => {
+
+                        return stripe.charges.create({
+                            amount: prices,     // amount will be amount*100
+                            description: "Your Product is ready",
+                            currency: 'USD',
+                            customer: user.id
+                        });
+                    })
+                    .then((charge) => {
+                        res.redirect("/success")
+                    })
+                    .catch((err) => {
+                        res.redirect("/failure")
+                    })
+
+            })
+
     } catch (err) {
         res.status(500).send({
             success: false,
@@ -94,6 +135,33 @@ const adminSendToUser = async (req, res) => {
         })
     }
 }
+
+
+// const createPayment = async (req, res) => {
+//     const createPaymentIntent = async (amount, currency) => {
+//         try {
+//             const paymentIntent = await stripe.paymentIntents.create({
+//                 amount: amount,
+//                 currency: currency,
+//             });
+
+//             // Return the client secret to the frontend
+//             return paymentIntent.client_secret;
+//         } catch (err) {
+//             console.error('Error creating Payment Intent:', err);
+//             throw err;
+//         }
+//     };
+//     const { amount, currency } = req.body;
+
+//     try {
+//         const clientSecret = await createPaymentIntent(amount, currency);
+//         res.json({ clientSecret });
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// };
+
 
 
 //get all task
@@ -131,5 +199,5 @@ module.exports = {
     createTask,
     getDesinerOrders,
     projectRep,
-    adminSendToUser
+    adminSendToUser,
 }
