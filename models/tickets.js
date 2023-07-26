@@ -4,7 +4,7 @@ const ticketSchema = new mongoose.Schema({
     Order: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "asignTask"
+        ref: "TaskAssign"
     },
     Subject: {
         type: String,

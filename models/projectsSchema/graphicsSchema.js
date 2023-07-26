@@ -5,7 +5,7 @@ const graphicsSchema = mongoose.Schema(
         userId: {
             type: mongoose.Schema.ObjectId,
             require: true,
-            ref: "User"
+            ref: "user"
         },
         DesignIdea: {
             type: String,

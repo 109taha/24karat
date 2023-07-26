@@ -4,12 +4,12 @@ const AsignTask = mongoose.Schema({
     orderId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "Order"
+        ref: "Orders"
     },
     designerId: {
         type: mongoose.Schema.ObjectId,
         require: true,
-        ref: "Designer"
+        ref: "designer"
     },
     Instruction: {
         type: String,

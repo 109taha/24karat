@@ -6,6 +6,11 @@ const PriceingProjectSchema = mongoose.Schema({
         require: true,
         ref: "TaskAssign"
     },
+    userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: "user",
+        require: true
+    },
     Instruction: {
         type: String,
     },

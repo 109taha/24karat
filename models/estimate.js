@@ -5,7 +5,7 @@ const estimateSchema = new mongoose.Schema(
         userId: {
             type: mongoose.Schema.ObjectId,
             require: true,
-            ref: "User"
+            ref: "user"
         },
         DesignName: {
             type: String,
