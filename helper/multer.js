@@ -13,10 +13,10 @@ const storage = multer.diskStorage({
 });
 
 const imageFilter = (req, file, cb) => {
-    if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
+    if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/zip") {
         cb(null, true);
     } else {
-        cb(new Error("Only image files are allowed!"));
+        cb(new Error("Only image or zip files are allowed!"));
     }
 };
 

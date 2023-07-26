@@ -14,7 +14,11 @@ const CompletedOrderSchema = mongoose.Schema({
     Instruction: {
         type: String,
     },
-    attachArtwork: {
+    JPGFile: {
+        type: String,
+        require: true,
+    },
+    SourceFile: {
         type: String,
         require: true,
     },

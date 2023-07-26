@@ -36,27 +36,28 @@ const createTask = async (req, res) => {
 
 //OrderCompleted
 const projectRep = async (req, res) => {
+    const designerId = req.params.id
+    const TaskId = await Task.findById(req.body.TaskId)
     try {
-        const designerId = req.params.id
-        const TaskId = await Task.findById(req.body.TaskId)
         // const update = await orderId.updateOne({ status: "In-Process" })
         if (!TaskId) {
             return res.status(400).json({ success: false, message: "No Task Found With Given Id!" })
         }
         const files = req.files;
+        console.log(files)
         const attachArtwork = [];
         if (!files || files?.length < 1)
             return res.status(401).json({
                 success: false,
                 message: "You have to upload at least one image to the listing",
             });
-        for (const file of files) {
-            const { path } = file;
+        for (const file in files) {
 
+            console.log("attachArtwork")
             try {
-                const uploader = await cloudinary.uploader.upload(path, { folder: "24-Karat" });
+                const uploader = await cloudinary.uploader.upload(files[file][0].path, { folder: "24-Karat" });
                 attachArtwork.push({ url: uploader.url });
-                fs.unlinkSync(path);
+                fs.unlinkSync(files[file][0].path);
             } catch (err) {
                 if (attachArtwork?.length) {
                     const imgs = imgObjs.map((obj) => obj.public_id);
@@ -65,7 +66,7 @@ const projectRep = async (req, res) => {
                 console.log(err)
             }
         };
-        const result = new ProjectRep({ ...req.body, attachArtwork: attachArtwork[0].url, designerId: designerId });
+        const result = new ProjectRep({ ...req.body, JPGFile: attachArtwork[0].url, SourceFile: attachArtwork[0].url, designerId: designerId });
         console.log(result)
         await result.save()
         res.status(200).json({ success: true, message: "task has been assign to designer ", result })
@@ -76,33 +77,13 @@ const projectRep = async (req, res) => {
 }
 
 const adminSendToUser = async (req, res) => {
-    const attachArtwork = [];
-    const files = req.files;
-
     try {
 
-        if (!files || files?.length < 1)
-            return res.status(401).json({
-                success: false,
-                message: "You have to upload at least one image to the listing",
-            });
-        for (const file of files) {
-            const { path } = file;
-            try {
-                const uploader = await cloudinary.uploader.upload(path, { folder: "24-Karat" });
-                attachArtwork.push({ url: uploader.url });
-                fs.unlinkSync(path);
-            } catch (err) {
-                if (attachArtwork?.length) {
-                    const imgs = imgObjs.map((obj) => obj.public_id);
-                    cloudinary.api.delete_resources(imgs);
-                }
-                console.log(err)
-            }
-        }
-        const prices = (req.body.prices)
+
+        const { prices, instruction, TaskId } = req.body
+        console.log(prices, TaskId)
         if (!prices) {
-            res.status(400).send({
+            return res.status(400).send({
                 success: false,
                 message: "you have to add prices first!"
             })
@@ -110,14 +91,14 @@ const adminSendToUser = async (req, res) => {
         const user = await new PriceProject(req.body).populate({ path: 'TaskId', select: 'orderId', populate: { path: 'orderId', select: 'userId', populate: { path: 'userId' } } })
         // console.log(user)
         if (!user) {
-            res.status(400).send({
+            return res.status(400).send({
                 success: false,
                 message: 'no user or order found on that id'
             })
         }
         const userId = user.TaskId.orderId.userId._id
         const taskId = user.TaskId._id
-        const result = new PriceProject({ TaskId: taskId, userId: userId, attachArtwork: attachArtwork[0].url, prices: prices })
+        const result = new PriceProject({ TaskId: taskId, userId: userId, prices: prices })
         await result.save()
         console.log(result);
         res.status(200).send({

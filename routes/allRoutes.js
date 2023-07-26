@@ -28,6 +28,7 @@ const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOr
 const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
 const picUpload = require("../controller/picUpload");
 const { renderBuyPage, payment, success, failure } = require("../controller/paymentController");
+const { userPayment } = require("../controller/userProject")
 
 
 
@@ -60,8 +61,8 @@ router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegi
 router.get("/getTask/:id", getDesinerOrders);
 router.get("/getAllTask", verifyAdmin, getTask);
 router.post("/createTask", verifyAdmin, createTask);
-router.post("/desginerRep/:id", upload.array("attachArtwork", 5), projectRep)
-router.post("/prices", upload.array("attachArtwork", 5), adminSendToUser)
+router.post("/desginerRep/:id", upload.fields([{ name: "JPGFile", maxCount: 1 }, { name: 'SourceFile', maxCount: 1 }]), projectRep)
+router.post("/prices", adminSendToUser)
 
 //TICKETS
 router.get("/AllTickets", getTickets);
@@ -72,16 +73,16 @@ router.get("/UserTickets/:id", getUserTickets)
 //Estimate
 router.post("/Response", verifyAdmin, AdminResponse);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
-router.post("/EstimateReq", upload.array("attachArtwork", 5), verifyUser, patchesJoi, creatingEstimateRequest);
+router.post("/EstimateReq", upload.array("JPGFile", 5), verifyUser, patchesJoi, creatingEstimateRequest);
 
 // payment
 router.get('/', renderBuyPage);
 router.post('/payment', payment);
-router.get('/success', success);
-router.get('/failure', failure);
+router.post('/paymentuser', userPayment);
+
 
 //pic upload
-router.post("/picUpload", upload.array("attachArtwork", 5), picUpload)
+router.post("/picUpload", upload.array("JPGFile", 5), picUpload)
 
 //PROJECTS
 

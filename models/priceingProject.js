@@ -14,15 +14,11 @@ const PriceingProjectSchema = mongoose.Schema({
     Instruction: {
         type: String,
     },
-    attachArtwork: {
-        type: String,
-        require: true,
-    },
     prices: {
         type: Number,
     }
-}, { timeStamps: true });
+}, { timestamps: true });
 
-const princes = mongoose.model("PriceingProject", PriceingProjectSchema);
+const prices = mongoose.model("PriceingProject", PriceingProjectSchema);
 
-module.exports = princes;
+module.exports = prices;

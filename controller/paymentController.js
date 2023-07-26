@@ -43,10 +43,10 @@ const payment = async (req, res) => {
                 });
             })
             .then((charge) => {
-                res.redirect("/success")
+                res.send("success")
             })
             .catch((err) => {
-                res.redirect("/failure")
+                res.send("failure")
             });
 
 
@@ -56,33 +56,9 @@ const payment = async (req, res) => {
 
 }
 
-const success = async (req, res) => {
 
-    try {
-
-        res.render('success');
-
-    } catch (error) {
-        console.log(error.message);
-    }
-
-}
-
-const failure = async (req, res) => {
-
-    try {
-
-        res.render('failure');
-
-    } catch (error) {
-        console.log(error.message);
-    }
-
-}
 
 module.exports = {
     renderBuyPage,
     payment,
-    success,
-    failure
 }
