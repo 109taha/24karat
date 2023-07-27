@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const PriceingProjectSchema = mongoose.Schema({
+    orderCompleted: {
+        type: mongoose.Schema.ObjectId,
+        require: true,
+        ref: "orderCompleted"
+    },
     TaskId: {
         type: mongoose.Schema.ObjectId,
         require: true,

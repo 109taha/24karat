@@ -26,5 +26,4 @@ const CompletedOrderSchema = mongoose.Schema({
 )
 
 const OrderCompleted = mongoose.model("orderCompleted", CompletedOrderSchema);
-
 module.exports = OrderCompleted;

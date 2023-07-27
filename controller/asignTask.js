@@ -44,7 +44,7 @@ const projectRep = async (req, res) => {
             return res.status(400).json({ success: false, message: "No Task Found With Given Id!" })
         }
         const files = req.files;
-        console.log(files)
+        // console.log(files)
         const attachArtwork = [];
         if (!files || files?.length < 1)
             return res.status(401).json({
@@ -53,9 +53,9 @@ const projectRep = async (req, res) => {
             });
         for (const file in files) {
 
-            console.log("attachArtwork")
             try {
                 const uploader = await cloudinary.uploader.upload(files[file][0].path, { folder: "24-Karat" });
+                // console.log("attachArtwork")
                 attachArtwork.push({ url: uploader.url });
                 fs.unlinkSync(files[file][0].path);
             } catch (err) {
@@ -80,27 +80,32 @@ const adminSendToUser = async (req, res) => {
     try {
 
 
-        const { prices, instruction, TaskId } = req.body
-        console.log(prices, TaskId)
+        const { prices, instruction, TaskId, orderCompleted } = req.body
+        console.log(prices, orderCompleted)
         if (!prices) {
             return res.status(400).send({
                 success: false,
                 message: "you have to add prices first!"
             })
         }
-        const user = await new PriceProject(req.body).populate({ path: 'TaskId', select: 'orderId', populate: { path: 'orderId', select: 'userId', populate: { path: 'userId' } } })
-        // console.log(user)
+        const user = await new PriceProject(req.body).populate({ path: 'orderCompleted', populate: { path: 'TaskId', select: 'orderId', populate: { path: 'orderId', select: 'userId', populate: { path: 'userId' } } } })
+        console.log(user.orderCompleted.TaskId.orderId.userId)
         if (!user) {
             return res.status(400).send({
                 success: false,
                 message: 'no user or order found on that id'
             })
         }
-        const userId = user.TaskId.orderId.userId._id
-        const taskId = user.TaskId._id
-        const result = new PriceProject({ TaskId: taskId, userId: userId, prices: prices })
+
+        const userId = user.orderCompleted.TaskId.orderId.userId._id
+        console.log(userId)
+        const taskId = user.orderCompleted.TaskId._id
+        console.log('TaskID:', taskId)
+        const Completed = user.orderCompleted._id
+        console.log(Completed)
+        const result = new PriceProject({ orderCompleted: Completed, TaskId: taskId, userId: userId, prices: prices })
         await result.save()
-        console.log(result);
+        // console.log(result);
         res.status(200).send({
             success: true,
             message: 'sended to user',
