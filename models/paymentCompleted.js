@@ -1,37 +1,33 @@
 const mongoose = require("mongoose");
 
 const PaymentId = mongoose.Schema({
+    payment: {
+        type: mongoose.Schema.ObjectId,
+        require: true,
+        ref: "paymentInprocess"
+    },
     userId: {
         type: mongoose.Schema.ObjectId,
         require: true,
         ref: "user"
-    },
-    designerId: {
-        type: mongoose.Schema.ObjectId,
-        require: true,
-        ref: "designer"
-    },
-    orderCompleted: {
-        type: mongoose.Schema.ObjectId,
-        require: true,
-        ref: "orderCompleted"
     },
     TaskId: {
         type: mongoose.Schema.ObjectId,
         require: true,
         ref: "TaskAssign"
     },
-    prices: {
-        type: Number,
-        require: true
+    paymentStatus: {
+        type: Boolean,
+        require: true,
+        default: false
     },
-    stripe_url: {
+    session_id: {
         type: String,
         require: true
     },
 }, { timestamps: true },
 )
 
-const Payment = mongoose.model("paymentInprocess", PaymentId);
+const Payment = mongoose.model("paymentCompleted", PaymentId);
 
 module.exports = Payment;
