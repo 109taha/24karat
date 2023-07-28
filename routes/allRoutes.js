@@ -27,28 +27,25 @@ const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigiti
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
 const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
 const picUpload = require("../controller/picUpload");
-const { userPayment, payment, CompletePayment } = require("../controller/userProject")
+const { userPayment, CompletePayment } = require("../controller/userProject");
 
 
 
 //router
 
 //homepage
-// router.get("/", (req, res) => {
-//     res.send("hello world!");
-// });
-
+router.get("/home", (req, res) => {
+    res.send("hello world!");
+});
 
 //USER
-router.post("/login", login);
+router.get("/login", login);
 router.delete("/delete/:id", deleted);
 router.post("/register", userSchemaJoi, register);
-
 
 //ADMIN
 router.post("/loginAdmin", adminlogin);
 router.post("/registerAdmin", adminRegister);
-
 
 //DESIGNER
 router.post("/designer/Login", designerLogin);
@@ -68,7 +65,6 @@ router.get("/AllTickets", getTickets);
 router.post("/createTickets", verifyUser, createTickets);
 router.get("/UserTickets/:id", getUserTickets)
 
-
 //Estimate
 router.post("/Response", verifyAdmin, AdminResponse);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
@@ -77,7 +73,6 @@ router.post("/EstimateReq", upload.array("JPGFile", 5), verifyUser, patchesJoi, 
 // payment
 router.post('/paymentuser', userPayment);
 router.post('/payment', CompletePayment)
-
 
 //pic upload
 router.post("/picUpload", upload.array("JPGFile", 5), picUpload)
@@ -104,14 +99,12 @@ router.post("/projectGraphices", upload.array("attachArtwork", 5), graphicsJoi, 
 // router.get("/Patches", verifyAdmin, getAllProjectPatches);
 // router.post("/projectPatches", patchesJoi, verifyUser, creatingProjectPatches);
 
-
 //orders get by admin
 router.get("/order", verifyAdmin, getAllOrder);
 router.get("/pendingOrder", verifyAdmin, getAllPendingOrder);
 router.get("/inprocessOrder", verifyAdmin, getAllInprocessOrder);
 router.get("/completedOrder", verifyAdmin, getAllCompletedOrder);
 router.get("/cancelledOrder", verifyAdmin, getAllcancelledOrder);
-
 
 //order get by User
 router.get("/OrderUser/:id", getUserAllOrder)

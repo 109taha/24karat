@@ -11,9 +11,6 @@ const CompletedOrderSchema = mongoose.Schema({
         require: true,
         ref: "designer"
     },
-    Instruction: {
-        type: String,
-    },
     JPGFile: {
         type: String,
         require: true,
@@ -21,6 +18,9 @@ const CompletedOrderSchema = mongoose.Schema({
     SourceFile: {
         type: String,
         require: true,
+    },
+    Instruction: {
+        type: String,
     },
 }, { timestamps: true },
 )

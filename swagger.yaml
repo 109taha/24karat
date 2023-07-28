@@ -1,0 +1,661 @@
+openapi: 3.0.3
+info: 
+  title: 24karat
+  description: -------------------------
+  version: 1.0.0
+  contact:
+    email:
+  license:
+    name: Apache 2.0
+    url: http://apache.org/
+servers:
+  - url: http://localhost:5000/v1
+tags:
+  - name: User
+    description: Everything api of user
+  - name: Admin
+    description: Everything api of Admin
+  - name: Designer
+    description: Everything api of Designer
+  - name: Order
+    description: Everything api of Order
+
+schemes: [http,https]
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id
+          example: 12321j4vj15vj123b5
+        firstname:
+          type: string
+          description: The first name
+          example: Jhon
+        lastname:
+          type: string
+          description: The last name
+          example: Dou
+        email:
+          type: string
+          description: The email
+          example: JhonDou@gmail.com
+        password:
+          type: string
+          description: The password
+          example: Password123
+        address:
+          type: string
+          description: The address
+          example: 123street 235 housenumber
+        city:
+          type: string
+          description: The city
+          example: Tokyo
+        country:
+          type: string
+          description: The country
+          example: Japan
+        postalCode:
+          type: string
+          description: The postal code
+          example: 123456
+        phone:
+          type: string
+          description: The phone number
+          example: 123456789
+
+    Admin:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email
+          example: Admin@example.com
+        password:
+          type: string
+          description: The password
+          example: AdminPassword123
+
+    Designer:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id
+          example: 12321j4vj15vj123b5
+        firstname:
+          type: string
+          description: The first name
+          example: Jhon
+        lastname:
+          type: string
+          description: The last name
+          example: Dou
+        email:
+          type: string
+          description: The email
+          example: JhonDou@gmail.com
+        password:
+          type: string
+          description: The password
+          example: Password123
+        address:
+          type: string
+          description: The address
+          example: 123street 235 housenumber
+        city:
+          type: string
+          description: The city
+          example: Tokyo
+        country:
+          type: string
+          description: The country
+          example: Japan
+        postalCode:
+          type: string
+          description: The postal code
+          example: 123456
+        phone:
+          type: string
+          description: The phone number
+          example: 123456789
+    Digitizing:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The auto-generated userid
+          example: 12321j4vj15vj123b5
+        DesignName:
+          type: string
+          description: The Design Name
+          example: example 1
+        NumberOfColors:
+          type: number
+          description: The Number Of Colors
+          example: 3
+        NameOfColors:
+          type: string
+          description: The Name Of Colors
+          example: red green blue
+        Height:
+          type: string
+          description: The Height
+          example: 12
+        Width:
+          type: string
+          description: The Width
+          example: 12
+        Unit:
+          type: string
+          description: The Unit
+          example: Mm
+          enum: 
+            - Inches
+            - Mm
+            - Cm
+        type:
+          type: string
+          description: The type
+          example: Mm
+          enum: 
+            - Fabric/Garments
+            - Cotton
+            - Ployester
+            - Ploy/Cotton Blends
+            - Polo
+            - Twill
+            - Fleece
+            - Denim
+            - Knit
+            - Silk
+            - Nylon
+            - Others
+        designPalcments:
+          type: string
+          description: The design Palcments
+          example: Mm
+          enum: 
+            - Cap
+            - Cap-back
+            - Cap-front
+            - Cap-side
+            - Jacket-back
+            - Left-chest
+            - Sleeves
+            - Other
+        appliques:
+          type: boolean
+          description: The Width
+          example: 12
+        designFormate: 
+          type: string,
+          description: The design Formate
+          enum: 
+            - Tajima (*.DST)
+            - Melco (*.CND)
+            - Melco (*.EXP)
+            - Deco, Brother, Babylock  (*.PES)
+            - Wilcom (*.EMB)
+            - Wilcom V9 (*.EMB)
+            - Wilcom ESS (*.ESS)
+            - Wilcom ESL (*.ESL)
+            - Wilcom PLauen (*.T10)
+            - Wilcom Saurer (*.T15)
+            - Hiraoka DAT (*.DAT)
+            - Hiraoka VEP (*.VEP)
+            - Saurer SLC (*.SAS)
+            - Time and Space MJD (*.MJD)
+            - Barudan (*.DSB)
+            - ZSK (*.DSZ)
+            - ZSK TC(*.Z??)
+            - Toyota (*.10O)
+            - Barudan (*.U??)
+            - Pfaff (*.KSM)
+            - Happy (*.TAP)
+            - Tajima (*.T01)
+            - Barudan (*.T03)
+            - Zangs (*.T04)
+            - ZSK (*.T05)
+            - Compucon (*.XXX)
+            - Artista Design V4.0 (*.ART)
+            - Artista Design V3.0 (*.ART)
+            - Artista Design V2.0 (*.ART)
+            - Artista Design V1.0 (*.ART)
+            - Explorations Projects (*.ART42)
+            - Explorations Tamplates (*.AMT42)
+            - Janome/Elna/Kenmore (*.SEW)
+            - Janome/Elna/Kenmore (*.JEF)
+            - Husqvarna/Viking (*.HUS)
+            - Deco, Brother, Babylock (*.PEC)
+            - Pfaff (*.PCD)
+            - Pfaff (*.PCQ)
+            - Poem, Huskygram, Singer (*.CSD)
+            - Pxf
+            - Ofm
+        timeFrame: 
+          type: string,
+          description: The time Frame
+          enum: 
+            - Normal turn-around
+            - "Urgent turn-around: {1-12 hours}, addition 5$"
+        autoThreadCutting: 
+          type: string,
+          description: The auto Thread Cutting
+          enum: 
+            - CUT THREAD LONGER THAN 2 MM
+            - CUT ALL CONNECTION THREADS
+            - DO NOT CUT THREADS
+        additionalInstructions: 
+          type: string,
+          description: The additional Instructions
+        attachArtwork: 
+          type: string,
+          description: The attach Artwork
+  
+    Graphic:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The auto-generated userid
+          example: 12321j4vj15vj123b5
+        DesignIdea:
+          type: string
+          description: The Design Idea
+          example: example 1
+        NumberOfColors:
+          type: number
+          description: The Number Of Colors
+          example: 3
+        NameOfColors:
+          type: string
+          description: The Name Of Colors
+          example: red green blue
+        type:
+          type: string
+          description: The type
+          example: Mm
+          enum: 
+            - Logo 
+            - Banner 
+            - Visiting Card
+            - Letter Head
+            - Stationery
+            - Penaflex
+            - Other
+        timeFrame: 
+          type: string,
+          description: The time Frame
+          enum: 
+            - Normal turn-around
+            - "Urgent turn-around: {1-12 hours}, addition 5$"
+        additionalInstructions: 
+          type: string,
+          description: The additional Instructions
+        attachArtwork: 
+          type: string,
+          description: The attach Artwork
+
+    Vector:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The auto-generated userid
+          example: 12321j4vj15vj123b5
+        DesignName:
+          type: string
+          description: The Design Name
+          example: example 1
+        NumberOfColors:
+          type: number
+          description: The Number Of Colors
+          example: 3
+        NameOfColors:
+          type: string
+          description: The Name Of Colors
+          example: red green blue
+        Height:
+          type: string
+          description: The Height
+          example: 12
+        Width:
+          type: string
+          description: The Width
+          example: 12
+        Unit:
+          type: string
+          description: The Unit
+          example: Mm
+          enum: 
+            - Inches
+            - Mm
+            - Cm
+        whatWillYouUseIfFor:
+          type: string
+          description: The what Will You Use It For
+          example: Mm
+          enum: 
+            - Screen Printing
+            - Direct To Garment
+            - Sublimation
+            - Vinyl Cutting
+            - Laser Engraving
+            - Denim
+            - Sand Blasting
+            - Diamond Drag Engraving
+            - Other
+        colorScheme:
+          type: string
+          description: The color Scheme
+          example: Mm
+          enum: 
+            - Black & White
+            - Black & White With Halftones
+            - Spot Color With NO Halftones
+            - Spot Color With Halftones
+            - Others
+        designFormate:
+          type: string
+          description: The design Formate
+          example: .pdf
+          enum: 
+            - .ai
+            - .pdf
+            - .crd
+            - .eps
+            - .psd
+            - .svg
+            - Other
+        timeFrame:
+          type: string,
+          description: The time Frame
+          enum: 
+            - Normal turn-around
+            - "Urgent turn-around: {1-12 hours}, addition 5$"
+        additionalInstructions: 
+          type: string,
+          description: The additional Instructions
+        attachArtwork: 
+          type: string,
+          description: The attach Artwork
+    Patches:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The auto-generated userid
+          example: 12321j4vj15vj123b5
+        DesignName:
+          type: string
+          description: The Design Name
+          example: example 1
+        Quantity:
+          type: number
+          description: The Quantity
+          example: 3
+        NumberOfColors:
+          type: number
+          description: The Number Of Colors
+          example: 3
+        NameOfColors:
+          type: string
+          description: The Name Of Colors
+          example: red green blue
+        Height:
+          type: string
+          description: The Height
+          example: 12
+        Width:
+          type: string
+          description: The Width
+          example: 12
+        Unit:
+          type: string
+          description: The Unit
+          example: Mm
+          enum: 
+            - Inches
+            - Mm
+            - Cm
+        type:
+          type: string
+          description: The type
+          example: Mm
+          enum: 
+            - Embroidered Patches
+            - Chenille Patches
+            - Enamel Pins
+            - Challenge Coins
+            - Tackle Twill Patches
+            - Applique Patches
+            - Leather Patches
+            - PVC/ Rubber Patches
+            - Printed/ Sublimated Patches
+            - Woven Patches
+            - Sequin Patches
+            - Ebroidered Keychains
+            - Chenille Keychains
+            - Leather Keychains
+            - PVC/ Rubber Keychains
+            - Printed Keychains
+            - Woven Keychains
+            - Face Masks
+            - Costom Socks
+        designPalcments:
+          type: string
+          description: The design Palcments
+          example: Mm
+          enum: 
+            - Iron On/ Heat Seal
+            - Velcro (Both Hook & Loop)
+            - Peel & Stick / Self Adhesive", "Sew On
+        timeFrame:
+          type: string,
+          description: The time Frame
+          enum: 
+            - "sample: {1-2 days}"
+            - "normal turn-around: {15-22 days}"
+            - "urgent turn-around: {8-15 days}"
+        autoThreadCutting:
+          type: string,
+          description: The auto Thread Cutting
+          enum: 
+            - CUT THREAD LONGER THAN 2 MM
+            - CUT ALL CONNECTION THREADS
+            - DO NOT CUT THREADS
+        additionalInstructions: 
+          type: string,
+          description: The additional Instructions
+        attachArtwork: 
+          type: string,
+          description: The attach Artwork
+    Orders:
+      type: object
+      properties:
+        userId:
+          type: String
+          description: you have to prive an id of user!
+        projectId:
+          type: String
+          description:  you have to prive an id of project
+        orderType: 
+          type: string
+          description: optional instruction if you want to send anything to designer
+          enum: 
+            - Digitizing
+            - Graphices
+            - Vactor
+        status:
+          type: string
+          description: by default its pending when the admin assign the task status change to in-process automactically
+          example: Pending
+          enum: 
+            - Pending
+            - In-Process
+            - Completed
+            - Cancelled
+
+    TaskAssign:
+      type: object
+      properties:
+        orderId:
+          type: String
+          description: you have to prive an id of order!
+          example: 1235421jkugc
+        designerId:
+          type: String
+          description:  you have to prive an id of designer
+          example: rj1hv4j12g4j1
+        Instruction: 
+          type: string
+          description: optional instruction if you want to send anything to designer
+
+    orderCompleted:
+      type: object
+      properties:
+        TaskId:
+          type: String
+          description: you have to prive an id of order!
+          example: 123b1hj41b4
+        designerId:
+          type: String
+          description:  you have to add id of designer in params
+          example: qg321jhv43545
+        JPGFile:
+          type: String
+          description:  prototype of the project which we can show to user
+          example: jpg file
+        SourceFile: 
+          type: string
+          description: zip file the file of data and content of project
+          example: zip file
+        Instruction: 
+          type: string
+          description: optional instruction if you want to send anything to admin
+    
+    PriceingProject:
+      type: object
+      properties:
+        orderCompleted:
+          type: string
+          description: you have to provide an id of order!
+          example: 123b1hj41b4
+        TaskId:
+          type: String
+          description:  you dont have to add id of task
+        userId:
+          type: String
+          description:  you dont have to provide an id of user
+        Instruction: 
+          type: string
+          description: optional instruction if you want to send anything to user
+        prices: 
+          type: number
+          description: you have to add prices
+          example: 6541321
+    paymentInprocess:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: you have to provide an id of user
+          example: 123b1hj41b4
+        designerId:
+          type: String
+          description:  you dont have to add id of designer
+        orderCompleted:
+          type: String
+          description:  you have to provide an id of order
+          example: g123jhb421b4
+        TaskId: 
+          type: string
+          description: you dont have to provide an id of task
+        prices: 
+          type: number
+          description: prices show to user
+          example: 6541321
+        stripe_url: 
+          type: string
+          description: stripe payment url saved automactically
+
+    paymentCompleted:
+      type: object
+      properties:
+        payment:
+          type: string
+          description: you have to send payment in process id
+          example: 123b1hj41b4
+        userId:
+          type: String
+          description:  you dont have to add id of user
+        TaskId: 
+          type: string
+          description: you dont have to provide an id of task
+        paymentStatus: 
+          type: boolean
+          description: auto true if user payed
+        session_id: 
+          type: string
+          description: you have to provide an session_id when backend get Session_id the source file send to user
+          example: 6541321
+          
+        
+        
+       
+paths:
+  /register:
+    post:
+      tags:
+        - User 
+      summary: for Creating User
+      description: this api is used For registerd a user
+      requestBody:
+        description: Create a new user in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+        '405':
+          description: Invalid input
+  /login:
+   get:
+      tags:
+        - User
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+          

@@ -4,6 +4,9 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const swaggerUi = require('swagger-ui-express')
+const YAML = require("yamljs");
+const swaggerJsDoc = YAML.load("./swagger.yaml");
 
 
 // body parser
@@ -17,6 +20,8 @@ const route = require('./routes/allRoutes');
 // Use the router middleware
 app.use('/v1', route);
 
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc))
 
 // connect mongodb
 const connectToMongoDB = require("./config/connectMongdb");

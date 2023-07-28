@@ -8,11 +8,12 @@ const orderScheema = new mongoose.Schema({
     },
     projectId: {
         type: mongoose.Schema.ObjectId,
+        require: true
     },
     orderType: {
         type: String,
         require: true,
-        enum: ["Digitizing", "Graphices", "Patches", "Vactor"]
+        enum: ["Digitizing", "Graphices", "Vactor"]
     },
     status: {
         type: String,
