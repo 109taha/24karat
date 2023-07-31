@@ -24,6 +24,13 @@ schemes: [http,https]
 
 
 components:
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     User:
       type: object
@@ -658,4 +665,164 @@ paths:
         '400':
           description: Invalid username/password supplied
 
-          
+  /delete/{userId}:
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      description: This can only be done by the logged-in user.
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the user that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+
+
+  /registerAdmin:
+    post:
+      tags:
+        - Admin 
+      summary: for Creating admin
+      description: this api is used For registerd a admin
+      requestBody:
+        description: Create a new admin in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Admin'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Admin'          
+        '405':
+          description: Invalid input
+  /loginAdmin:
+   post:
+      tags:
+        - Admin
+      summary: Logs admin into the system
+      description: ''
+      operationId: login Admin
+      parameters:
+        - name: email
+          in: query
+          description: The admin name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+  /designer/Register:
+    post:
+      tags:
+        - Designer 
+      summary: for Creating User
+      description: this api is used For registerd a user
+      requestBody:
+        description: Create a new user in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+        '405':
+          description: Invalid input
+  /designer/Login:
+   get:
+      tags:
+        - Designer
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+  /deleteDesigner/{userId}:
+    delete:
+      tags:
+        - Designer
+      summary: Delete Designer
+      description: This can only be done by the logged-in Designer.
+      operationId: Delete Designer
+      parameters:
+        - name: DesignerId
+          in: path
+          description: The ID of the Designer that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Designer deleted successfully
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: Designer not found
+
+    /getAllDesginer:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Designer
+      summary: Get all Designer
+      description: Retrieve a list of all users.
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
