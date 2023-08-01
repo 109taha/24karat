@@ -4,25 +4,819 @@ info:
   description: -------------------------
   version: 1.0.0
   contact:
-    email:
+    email: 109taha@gmail.com
   license:
     name: Apache 2.0
     url: http://apache.org/
+schemes:
+ - https
 servers:
   - url: http://localhost:5000/v1
 tags:
   - name: User
-    description: Everything api of user
+    description: Every api of user
   - name: Admin
-    description: Everything api of Admin
+    description: Every api of Admin
   - name: Designer
-    description: Everything api of Designer
+    description: Every api of Designer
   - name: Order
-    description: Everything api of Order
-
-schemes: [http,https]
+    description: Every api of Order
 
 
+paths:
+  /register:
+    post:
+      tags:
+        - User 
+      summary: for Creating User
+      description: this api is used For registerd a user
+      requestBody:
+        description: Create a new user in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+        '405':
+          description: Invalid input
+  /login:
+   get:
+      tags:
+        - User
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+  /delete/{userId}:
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      description: This can only be done by the logged-in user.
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the user that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted successfully
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+
+
+  /registerAdmin:
+    post:
+      tags:
+        - Admin 
+      summary: for Creating admin
+      description: this api is used For registerd a admin
+      requestBody:
+        description: Create a new admin in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Admin'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Admin'          
+        '405':
+          description: Invalid input
+  /loginAdmin:
+   post:
+      tags:
+        - Admin
+      summary: Logs admin into the system
+      description: ''
+      operationId: login Admin
+      parameters:
+        - name: email
+          in: query
+          description: The admin name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+  /designer/Register:
+    post:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Designer
+      summary: for Creating User
+      description: this api is used For registerd a user
+      requestBody:
+        description: Create a new user in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'          
+        '405':
+          description: Invalid input
+  /designer/Login:
+    get:
+      tags:
+        - Designer
+      summary: Logs user into the system
+      description: ''
+      operationId: UserLogin
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username/password supplied
+
+  /deleteDesigner/{DesignerId}:
+    delete:
+      tags:
+        - Designer
+      summary: Delete Designer
+      description: This can only be done by the logged-in Designer.
+      operationId: Delete Designer
+      parameters:
+        - name: DesignerId
+          in: path
+          description: The ID of the Designer that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Designer deleted successfully
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: Designer not found
+
+  /getAllDesginer:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Designer
+      summary: Get all Designer
+      description: Retrieve a list of all users.
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /projectDigitizing:
+    post:
+      tags:
+        - Digitizing 
+      summary: for Creating Digitizing
+      description: this api is used For Creating Digitizing
+      requestBody:
+        description:  Creating a new Digitizing order in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Digitizing'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Digitizing'          
+        '405':
+          description: Invalid input
+
+  /digitizing:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Digitizing 
+      summary: Get all digitizing
+      description: Retrieve a list of all digitizing.
+      operationId: Get All Digitizing
+      responses:
+        '200':
+          description: A list of digitizing.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Digitizing' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /digitizing/{userId}:
+    get: 
+      tags:
+        - Digitizing 
+      summary: Get users digitizing
+      description: Retrieve a list of users digitizing.
+      operationId: Get Users Digitizing
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of digitizing.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Digitizing' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+
+  /projectVector:
+    post:
+      tags:
+        - Vector 
+      summary: for Creating Vector
+      description: this api is used For Creating Vector
+      requestBody:
+        description:  Creating a new Vector order in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vector'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vector'          
+        '405':
+          description: Invalid input
+
+  /Vector:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Vector
+      summary: Get all Vector
+      description: Retrieve a list of all Vector.
+      operationId: All Digitizing
+      responses:
+        '200':
+          description: A list of Vector.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vector' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /Vector/{userId}:
+    get: 
+      tags:
+        - Vector
+      summary: Get users Vector
+      description: Retrieve a list of users Vector.
+      operationId: Users Vector
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Vector.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vector' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /projectGraphices:
+    post:
+      tags:
+        - Graphic 
+      summary: for Creating Graphic
+      description: this api is used For Creating Graphic
+      requestBody:
+        description:  Creating a new Graphic order in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Graphic'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graphic'          
+        '405':
+          description: Invalid input
+
+  /Graphices:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Graphic
+      summary: Get all Graphic
+      description: Retrieve a list of all Graphic.
+      operationId: Get All Graphic
+      responses:
+        '200':
+          description: A list of Graphic.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Graphic' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /Graphices/{userId}:
+    get: 
+      tags:
+        - Graphic
+      summary: Get users Graphic
+      description: Retrieve a list of users Graphic.
+      operationId: Users graphics
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Graphic.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Graphic' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /order:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Order
+      summary: Get all Order
+      description: Retrieve a list of all Order.
+      operationId: Get All Order
+      responses:
+        '200':
+          description: A list of Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+  
+  /pendingOrder:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Order
+      summary: Get all pending Order
+      description: Retrieve a list of all Order.
+      operationId: All Order
+      responses:
+        '200':
+          description: A list of Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+  
+  /inprocessOrder:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Order
+      summary: Get all Inprocess Order
+      description: Retrieve a list of all inprocess Order.
+      operationId: All inprocess  Order
+      responses:
+        '200':
+          description: A list of inprocess Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+
+  /completedOrder:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Order
+      summary: Get all completed Order
+      description: Retrieve a list of all completed Order.
+      operationId: All completed Order
+      responses:
+        '200':
+          description: A list of completed Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /cancelledOrder:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Order
+      summary: Get all cancel Order
+      description: Retrieve a list of all cancel Order.
+      operationId: All canceled Order
+      responses:
+        '200':
+          description: A list of cancel Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+
+  /OrderUser/{userId}:
+    get:
+      tags:
+        - Order
+      summary: Get all users Order
+      description: Retrieve a list of all user Order.
+      operationId: Get all users Order
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of user Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Orders' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /createTask:
+    post:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - TaskAssign 
+      summary: for  Task Assign
+      description: this api is use for Task Assign
+      requestBody:
+        description:  Creating a new Task in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskAssign'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskAssign'          
+        '405':
+          description: Invalid input
+
+  /getAllTask:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - TaskAssign
+      summary: Get all Task Assign
+      description: Retrieve a list of all Task Assign.
+      operationId: Get Task Assign
+      responses:
+        '200':
+          description: A list of user Order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskAssign' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /getTask/{userId}:
+    get:
+      tags:
+        - TaskAssign
+      summary: Get all users Task Assign
+      description: Retrieve a list of all user Task Assign.
+      operationId: Get All Task Assign
+      parameters:
+        - name: userId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of user Task Assign.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskAssign' # Assuming you have a 'User' schema defined in 'components/schemas'
+        '500':
+          description: Internal server error
+
+  /desginerRep/{designerId}:
+    post:
+      tags:
+        - orderCompleted 
+      summary: for  Task completion form designer
+      description: this api is use for Task Assign. In this api designer add the source file which is created by him and send to admin
+      parameters:
+        - name: designerId
+          in: path
+          description: The ID of the User who send req
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description:  sending a source file in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orderCompleted'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/orderCompleted'          
+        '405':
+          description: Invalid input
+
+  /prices:
+    post:
+      tags:
+        - PriceingProject 
+      summary: for  Task completion form admin
+      description: In this api admin add prices and send to the user that your project is ready pay that amount and the project is send to you
+      requestBody:
+        description:  sending Priceing Project in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PriceingProject'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceingProject'          
+        '405':
+          description: Invalid input
+
+  /paymentuser:
+    post:
+      tags:
+        - paymentInprocess 
+      summary: payment Inprocess with the hand of user
+      description: in this api user have an url link which is saved in the data base automatically
+      requestBody:
+        description:   payment Inprocess of Project in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paymentInprocess'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentInprocess'          
+        '405':
+          description: Invalid input
+
+  /payment:
+    post:
+      tags:
+        - paymentCompleted 
+      summary: payment Completed
+      description: in this api user payment Completed and the user got an source file
+      requestBody:
+        description:  sending Priceing Project in the deshboard
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paymentCompleted'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentCompleted'          
+        '405':
+          description: Invalid input
+
+  /EstimateReq:
+    post:
+      tags:
+        - Estimate 
+      summary: Estimate
+      description: creating an estimate req by user for getting an price and time duration of patches
+      requestBody:
+        description:  Estimate for patches
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Patches'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patches'          
+        '405':
+          description: Invalid input
+  /Response:
+    post:
+      tags:
+        - Estimate 
+      summary: Estimate reply byh admin
+      description: creating an estimate reply by admin in which price and time duration of patches are added
+      requestBody:
+        description:  Estimate for patches
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EstimateRepByAdmin'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstimateRepByAdmin'          
+        '405':
+          description: Invalid input
+
+  /AllEstimate:
+    get:
+      security:
+        - BearerAuth: [] 
+      tags:
+        - Estimate
+      summary: Get all estimate for replyies
+      description: Retrieve a list of all user estimates.
+      operationId: Get All estimates
+      responses:
+        '200':
+          description: A list of user estimates.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patches' 
+        '500':
+          description: Internal server error
 components:
 
   securitySchemes:
@@ -201,7 +995,7 @@ components:
           description: The Width
           example: 12
         designFormate: 
-          type: string,
+          type: string
           description: The design Formate
           enum: 
             - Tajima (*.DST)
@@ -246,23 +1040,23 @@ components:
             - Pxf
             - Ofm
         timeFrame: 
-          type: string,
+          type: string
           description: The time Frame
           enum: 
             - Normal turn-around
             - "Urgent turn-around: {1-12 hours}, addition 5$"
         autoThreadCutting: 
-          type: string,
+          type: string
           description: The auto Thread Cutting
           enum: 
             - CUT THREAD LONGER THAN 2 MM
             - CUT ALL CONNECTION THREADS
             - DO NOT CUT THREADS
         additionalInstructions: 
-          type: string,
+          type: string
           description: The additional Instructions
         attachArtwork: 
-          type: string,
+          type: string
           description: The attach Artwork
   
     Graphic:
@@ -297,16 +1091,16 @@ components:
             - Penaflex
             - Other
         timeFrame: 
-          type: string,
+          type: string
           description: The time Frame
           enum: 
             - Normal turn-around
             - "Urgent turn-around: {1-12 hours}, addition 5$"
         additionalInstructions: 
-          type: string,
+          type: string
           description: The additional Instructions
         attachArtwork: 
-          type: string,
+          type: string
           description: The attach Artwork
 
     Vector:
@@ -381,16 +1175,16 @@ components:
             - .svg
             - Other
         timeFrame:
-          type: string,
+          type: string
           description: The time Frame
           enum: 
             - Normal turn-around
             - "Urgent turn-around: {1-12 hours}, addition 5$"
         additionalInstructions: 
-          type: string,
+          type: string
           description: The additional Instructions
         attachArtwork: 
-          type: string,
+          type: string
           description: The attach Artwork
     Patches:
       type: object
@@ -464,33 +1258,48 @@ components:
             - Velcro (Both Hook & Loop)
             - Peel & Stick / Self Adhesive", "Sew On
         timeFrame:
-          type: string,
+          type: string
           description: The time Frame
           enum: 
             - "sample: {1-2 days}"
             - "normal turn-around: {15-22 days}"
             - "urgent turn-around: {8-15 days}"
         autoThreadCutting:
-          type: string,
+          type: string
           description: The auto Thread Cutting
           enum: 
             - CUT THREAD LONGER THAN 2 MM
             - CUT ALL CONNECTION THREADS
             - DO NOT CUT THREADS
         additionalInstructions: 
-          type: string,
+          type: string
           description: The additional Instructions
         attachArtwork: 
-          type: string,
+          type: string
           description: The attach Artwork
+
+    EstimateRepByAdmin:
+      type: object
+      properties:
+        estimateId: 
+          type: string
+          description: you have to provide an estimate id
+        prices: 
+          type: string
+          description: you have to provide a prices of that estimate
+        timeDuration: 
+          type: string
+          description: you have to provide a time of completion
+        
+
     Orders:
       type: object
       properties:
         userId:
-          type: String
+          type: string
           description: you have to prive an id of user!
         projectId:
-          type: String
+          type: string
           description:  you have to prive an id of project
         orderType: 
           type: string
@@ -513,11 +1322,11 @@ components:
       type: object
       properties:
         orderId:
-          type: String
+          type: string
           description: you have to prive an id of order!
           example: 1235421jkugc
         designerId:
-          type: String
+          type: string
           description:  you have to prive an id of designer
           example: rj1hv4j12g4j1
         Instruction: 
@@ -528,15 +1337,15 @@ components:
       type: object
       properties:
         TaskId:
-          type: String
+          type: string
           description: you have to prive an id of order!
           example: 123b1hj41b4
         designerId:
-          type: String
+          type: string
           description:  you have to add id of designer in params
           example: qg321jhv43545
         JPGFile:
-          type: String
+          type: string
           description:  prototype of the project which we can show to user
           example: jpg file
         SourceFile: 
@@ -555,10 +1364,10 @@ components:
           description: you have to provide an id of order!
           example: 123b1hj41b4
         TaskId:
-          type: String
+          type: string
           description:  you dont have to add id of task
         userId:
-          type: String
+          type: string
           description:  you dont have to provide an id of user
         Instruction: 
           type: string
@@ -567,6 +1376,7 @@ components:
           type: number
           description: you have to add prices
           example: 6541321
+
     paymentInprocess:
       type: object
       properties:
@@ -575,10 +1385,10 @@ components:
           description: you have to provide an id of user
           example: 123b1hj41b4
         designerId:
-          type: String
+          type: string
           description:  you dont have to add id of designer
         orderCompleted:
-          type: String
+          type: string
           description:  you have to provide an id of order
           example: g123jhb421b4
         TaskId: 
@@ -600,7 +1410,7 @@ components:
           description: you have to send payment in process id
           example: 123b1hj41b4
         userId:
-          type: String
+          type: string
           description:  you dont have to add id of user
         TaskId: 
           type: string
@@ -612,217 +1422,3 @@ components:
           type: string
           description: you have to provide an session_id when backend get Session_id the source file send to user
           example: 6541321
-          
-        
-        
-       
-paths:
-  /register:
-    post:
-      tags:
-        - User 
-      summary: for Creating User
-      description: this api is used For registerd a user
-      requestBody:
-        description: Create a new user in the deshboard
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'          
-        '405':
-          description: Invalid input
-  /login:
-   get:
-      tags:
-        - User
-      summary: Logs user into the system
-      description: ''
-      operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Invalid username/password supplied
-
-  /delete/{userId}:
-    delete:
-      tags:
-        - User
-      summary: Delete user
-      description: This can only be done by the logged-in user.
-      operationId: deleteUser
-      parameters:
-        - name: userId
-          in: path
-          description: The ID of the user that needs to be deleted
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: User deleted successfully
-        '400':
-          description: Invalid username supplied
-        '404':
-          description: User not found
-
-
-  /registerAdmin:
-    post:
-      tags:
-        - Admin 
-      summary: for Creating admin
-      description: this api is used For registerd a admin
-      requestBody:
-        description: Create a new admin in the deshboard
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Admin'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Admin'          
-        '405':
-          description: Invalid input
-  /loginAdmin:
-   post:
-      tags:
-        - Admin
-      summary: Logs admin into the system
-      description: ''
-      operationId: login Admin
-      parameters:
-        - name: email
-          in: query
-          description: The admin name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Invalid username/password supplied
-
-  /designer/Register:
-    post:
-      tags:
-        - Designer 
-      summary: for Creating User
-      description: this api is used For registerd a user
-      requestBody:
-        description: Create a new user in the deshboard
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'          
-        '405':
-          description: Invalid input
-  /designer/Login:
-   get:
-      tags:
-        - Designer
-      summary: Logs user into the system
-      description: ''
-      operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Invalid username/password supplied
-
-  /deleteDesigner/{userId}:
-    delete:
-      tags:
-        - Designer
-      summary: Delete Designer
-      description: This can only be done by the logged-in Designer.
-      operationId: Delete Designer
-      parameters:
-        - name: DesignerId
-          in: path
-          description: The ID of the Designer that needs to be deleted
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Designer deleted successfully
-        '400':
-          description: Invalid username supplied
-        '404':
-          description: Designer not found
-
-    /getAllDesginer:
-    get:
-      security:
-        - BearerAuth: [] 
-      tags:
-        - Designer
-      summary: Get all Designer
-      description: Retrieve a list of all users.
-      operationId: getAllUsers
-      responses:
-        '200':
-          description: A list of users.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User' # Assuming you have a 'User' schema defined in 'components/schemas'
-        '500':
-          description: Internal server error
