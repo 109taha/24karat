@@ -9,6 +9,9 @@ const YAML = require("yamljs");
 const swaggerJsDoc = YAML.load("./swagger.yaml");
 
 
+//hosting 
+// require('v1/prob')(app)
+
 // body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +22,9 @@ const route = require('./routes/allRoutes');
 
 // Use the router middleware
 app.use('/v1', route);
+app.use('/', (req, res) => {
+    res.send('hello world')
+})
 
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc))

@@ -34,7 +34,7 @@ const { userPayment, CompletePayment } = require("../controller/userProject");
 //router
 
 //homepage
-router.get("/home", (req, res) => {
+router.get("/", (req, res) => {
     res.send("hello world!");
 });
 
