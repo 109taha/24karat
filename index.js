@@ -8,10 +8,6 @@ const swaggerUi = require('swagger-ui-express')
 const YAML = require("yamljs");
 const swaggerJsDoc = YAML.load("./swagger.yaml");
 
-
-//hosting 
-// require('v1/prob')(app)
-
 // body parser
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
