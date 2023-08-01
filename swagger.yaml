@@ -46,32 +46,31 @@ paths:
                 $ref: '#/components/schemas/User'          
         '405':
           description: Invalid input
+
   /login:
-   get:
+    post:
       tags:
-        - User
+       - User
       summary: Logs user into the system
       description: ''
       operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
-
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: successful operation
         '400':
           description: Invalid username/password supplied
+
 
   /delete/{userId}:
     delete:
@@ -118,26 +117,25 @@ paths:
                 $ref: '#/components/schemas/Admin'          
         '405':
           description: Invalid input
+
   /loginAdmin:
-   post:
+    post:
       tags:
-        - Admin
-      summary: Logs admin into the system
+       - Admin
+      summary: Logs user into the system
       description: ''
-      operationId: login Admin
-      parameters:
-        - name: email
-          in: query
-          description: The admin name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: successful operation
@@ -169,25 +167,23 @@ paths:
         '405':
           description: Invalid input
   /designer/Login:
-    get:
+    post:
       tags:
-        - Designer
+       - Designer
       summary: Logs user into the system
       description: ''
-      operationId: UserLogin
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: successful operation

@@ -34,12 +34,12 @@ const { userPayment, CompletePayment } = require("../controller/userProject");
 //router
 
 //homepage
-router.get("/home", (req, res) => {
+router.get("/", (req, res) => {
     res.send("hello world!");
 });
 
 //USER
-router.get("/login", login);
+router.post("/login", login);
 router.delete("/delete/:id", deleted);
 router.post("/register", userSchemaJoi, register);
 
