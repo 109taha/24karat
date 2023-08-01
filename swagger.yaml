@@ -124,7 +124,7 @@ paths:
        - Admin
       summary: Logs user into the system
       description: ''
-      operationId: loginUser
+      operationId: login admin
       requestBody:
         required: true
         content:
@@ -155,7 +155,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Designer'
         required: true
       responses:
         '200':
@@ -163,7 +163,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'          
+                $ref: '#/components/schemas/Designer'          
         '405':
           description: Invalid input
   /designer/Login:
@@ -172,7 +172,7 @@ paths:
        - Designer
       summary: Logs user into the system
       description: ''
-      operationId: loginUser
+      operationId: login User
       requestBody:
         required: true
         content:
@@ -229,7 +229,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User' # Assuming you have a 'User' schema defined in 'components/schemas'
+                  $ref: '#/components/schemas/Designer' # Assuming you have a 'User' schema defined in 'components/schemas'
         '500':
           description: Internal server error
 

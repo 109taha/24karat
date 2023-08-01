@@ -18,12 +18,13 @@ const route = require('./routes/allRoutes');
 
 // Use the router middleware
 app.use('/v1', route);
-app.use('/', (req, res) => {
-    res.send('hello world')
-})
+app.get("/", (req, res) => {
+    res.send("hello world!");
+});
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc))
 
 // connect mongodb
 const connectToMongoDB = require("./config/connectMongdb");
