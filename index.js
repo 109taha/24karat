@@ -1,12 +1,20 @@
+const cors = require('cors')
 const express = require("express");
 require("dotenv").config();
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+
 const swaggerUi = require('swagger-ui-express')
 const YAML = require("yamljs");
 const swaggerJsDoc = YAML.load("./swagger.yaml");
+
+//cors 
+app.use(cors({
+    origin: '*'
+}))
 
 // body parser
 const bodyParser = require("body-parser");
