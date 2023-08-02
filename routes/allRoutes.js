@@ -35,7 +35,7 @@ const { userPayment, CompletePayment } = require("../controller/userProject");
 
 //homepage
 router.get("/", (req, res) => {
-    res.send("hello world!");
+    res.send("hello world! from /v1/ !");
 });
 
 //USER

@@ -6,11 +6,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-
-const swaggerUi = require('swagger-ui-express')
-const YAML = require("yamljs");
-const swaggerJsDoc = YAML.load("./swagger.yaml");
-
 //cors 
 app.use(cors({
     origin: '*'
@@ -27,12 +22,9 @@ const route = require('./routes/allRoutes');
 // Use the router middleware
 app.use('/v1', route);
 app.get("/", (req, res) => {
-    res.send("hello world!");
+    res.send("hello world from page 1");
 });
 
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsDoc))
 
 // connect mongodb
 const connectToMongoDB = require("./config/connectMongdb");
