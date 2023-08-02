@@ -26,7 +26,6 @@ const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphice
 const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
 const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
 const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
-const picUpload = require("../controller/picUpload");
 const { userPayment, CompletePayment } = require("../controller/userProject");
 
 
@@ -74,8 +73,6 @@ router.post("/EstimateReq", upload.array("JPGFile", 5), verifyUser, patchesJoi, 
 router.post('/paymentuser', userPayment);
 router.post('/payment', CompletePayment)
 
-//pic upload
-router.post("/picUpload", upload.array("JPGFile", 5), picUpload)
 
 //PROJECTS
 
