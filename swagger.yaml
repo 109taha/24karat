@@ -21,6 +21,7 @@ tags:
     description: Every api of Designer
   - name: Order
     description: Every api of Order
+Access-Control-Allow-Headers: Content-Type, api_key, Authorization
 
 
 paths:
