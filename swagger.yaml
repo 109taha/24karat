@@ -21,7 +21,9 @@ tags:
     description: Every api of Designer
   - name: Order
     description: Every api of Order
-Access-Control-Allow-Headers: Content-Type, api_key, Authorization
+Access-Control-Allow-Origin: https://karat24-729ae30fe3a2.herokuapp.com/
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Authorization
 
 
 paths:
