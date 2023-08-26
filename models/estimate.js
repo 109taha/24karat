@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 
-const estimateSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.ObjectId,
-      require: true,
-      ref: "user",
-    },
+const EstimateScheema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "user",
+    require: true,
+  },
+  orderType: {
+    type: String,
+    require: true,
+    enum: ["Digitizing", "Vactor"],
+  },
+  orderDetails: {
     DesignName: {
       type: String,
-      reqiure: true,
-      trim: true,
-    },
-    Quantity: {
-      type: Number,
       reqiure: true,
       trim: true,
     },
@@ -44,51 +44,107 @@ const estimateSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      reqiure: true,
       enum: [
-        "Embroidered Patches",
-        "Chenille Patches",
-        "Enamel Pins",
-        "Challenge Coins",
-        "Tackle Twill Patches",
-        "Applique Patches",
-        "Leather Patches",
-        "PVC/ Rubber Patches",
-        "Printed/ Sublimated Patches",
-        "Woven Patches",
-        "Sequin Patches",
-        "Ebroidered Keychains",
-        "Chenille Keychains",
-        "Leather Keychains",
-        "PVC/ Rubber Keychains",
-        "Printed Keychains",
-        "Woven Keychains",
-        "Face Masks",
-        "Costom Socks",
+        "Fabric/Garments",
+        "Cotton",
+        "Ployester",
+        "Ploy/Cotton Blends",
+        "Polo",
+        "Twill",
+        "Fleece",
+        "Denim",
+        "Knit",
+        "Silk",
+        "Nylon",
+        "Others",
       ],
     },
-    designPalcment: {
+    whatWillYouUseIfFor: {
       type: String,
-      reqiure: true,
       enum: [
-        "Iron On/ Heat Seal",
-        "Velcro (Both Hook & Loop)",
-        "Peel & Stick / Self Adhesive",
-        "Sew On",
+        "Screen Printing",
+        "Direct To Garment",
+        "Sublimation",
+        "Vinyl Cutting",
+        "Laser Engraving",
+        "Denim",
+        "Sand Blasting",
+        "Diamond Drag Engraving",
+        "Other",
+      ],
+    },
+    colorScheme: {
+      type: String,
+      enum: [
+        "Black & White",
+        "Black & White With Halftones",
+        "Spot Color With NO Halftones",
+        "Spot Color With Halftones",
+        "Others",
+      ],
+    },
+    designPalcments: {
+      type: String,
+    },
+    appliques: {
+      type: Boolean,
+      require: true,
+    },
+    designFormate: {
+      type: String,
+      enum: [
+        "Tajima (*.DST)",
+        "Melco (*.CND)",
+        "Melco (*.EXP)",
+        "Deco, Brother, Babylock  (*.PES)",
+        "Wilcom (*.EMB)",
+        "Wilcom V9 (*.EMB)",
+        "Wilcom ESS (*.ESS)",
+        "Wilcom ESL (*.ESL)",
+        "Wilcom PLauen (*.T10)",
+        "Wilcom Saurer (*.T15)",
+        "Hiraoka DAT (*.DAT)",
+        "Hiraoka VEP (*.VEP)",
+        "Saurer SLC (*.SAS)",
+        "Time and Space MJD (*.MJD)",
+        "Barudan (*.DSB)",
+        "ZSK (*.DSZ)",
+        "ZSK TC(*.Z??)",
+        "Toyota (*.10O)",
+        "Barudan (*.U??)",
+        "Pfaff (*.KSM)",
+        "Happy (*.TAP)",
+        "Tajima (*.T01)",
+        "Barudan (*.T03)",
+        "Zangs (*.T04)",
+        "ZSK (*.T05)",
+        "Compucon (*.XXX)",
+        "Artista Design V4.0 (*.ART)",
+        "Artista Design V3.0 (*.ART)",
+        "Artista Design V2.0 (*.ART)",
+        "Artista Design V1.0 (*.ART)",
+        "Explorations Projects (*.ART42)",
+        "Explorations Tamplates (*.AMT42)",
+        "Janome/Elna/Kenmore (*.SEW)",
+        "Janome/Elna/Kenmore (*.JEF)",
+        "Husqvarna/Viking (*.HUS)",
+        "Deco, Brother, Babylock (*.PEC)",
+        "Pfaff (*.PCD)",
+        "Pfaff (*.PCQ)",
+        "Poem, Huskygram, Singer (*.CSD)",
+        "Pxf",
+        "Ofm",
       ],
     },
     timeFrame: {
       type: String,
-      require: true,
       enum: [
-        "sample: {1-2 days}",
-        "normal turn-around: {15-22 days}",
-        "urgent turn-around: {8-15 days}",
+        "Normal turn-around",
+        "Urgent turn-around: {1-12 hours}, addition 5$",
       ],
     },
     autoThreadCutting: {
       type: String,
-      require: true,
       enum: [
         "CUT THREAD LONGER THAN 2 MM",
         "CUT ALL CONNECTION THREADS",
@@ -97,22 +153,12 @@ const estimateSchema = new mongoose.Schema(
     },
     additionalInstructions: {
       type: String,
-      require: true,
     },
     attachArtwork: {
       type: String,
     },
-    prices: {
-      type: Number,
-      require: true,
-    },
-    timeDuration: {
-      type: String,
-      require: true,
-    },
   },
-  { timestamps: true }
-);
-const Estimate = mongoose.model("Estimate", estimateSchema);
+});
 
+const Estimate = mongoose.model("Estimates", EstimateScheema);
 module.exports = Estimate;

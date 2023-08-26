@@ -6,7 +6,56 @@ const cloudinary = require("../helper/cloudinary");
 const fs = require("fs");
 const Digitizing = require("../models/projectsSchema/digitizingSchema");
 
-const creatingEstimateRequest = async (req, res) => {
+// const creatingEstimateRequest = async (req, res) => {
+//   const files = req.files;
+//   const attachArtwork = [];
+//   try {
+//     if (!files || files?.length < 1)
+//       return res.status(401).json({
+//         success: false,
+//         message: "You have to upload at least one image to the listing",
+//       });
+//     for (const file of files) {
+//       const { path } = file;
+//       try {
+//         const uploader = await cloudinary.uploader.upload(path, {
+//           folder: "24-Karat",
+//         });
+//         attachArtwork.push({ url: uploader.url });
+//         fs.unlinkSync(path);
+//       } catch (err) {
+//         if (attachArtwork?.length) {
+//           const imgs = imgObjs.map((obj) => obj.public_id);
+//           cloudinary.api.delete_resources(imgs);
+//         }
+//         console.log(err);
+//       }
+//     }
+//     const newEstimate = new Estimate({
+//       ...req.body,
+//       attachArtwork: attachArtwork[0].url,
+//     });
+//     console.log(newEstimate);
+//     if (!newEstimate) {
+//       res.status(404).send({
+//         success: false,
+//         message: "no data found",
+//       });
+//     }
+//     await newEstimate.save();
+//     res.status(200).send({
+//       success: true,
+//       newEstimate,
+//     });
+//   } catch (error) {
+//     res.status(500).send({
+//       success: false,
+//       message: "SomeThing Went Wrong!",
+//     });
+//   }
+// };
+
+const estimateDigitizing = async (req, res) => {
   const files = req.files;
   const attachArtwork = [];
   try {
@@ -31,27 +80,143 @@ const creatingEstimateRequest = async (req, res) => {
         console.log(err);
       }
     }
-    const newEstimate = new Estimate({
-      ...req.body,
-      attachArtwork: attachArtwork[0].url,
-    });
-    console.log(newEstimate);
-    if (!newEstimate) {
-      res.status(404).send({
-        success: false,
-        message: "no data found",
-      });
+    const {
+      DesignName,
+      NumberOfColors,
+      NameOfColors,
+      Height,
+      Width,
+      Unit,
+      type,
+      designPalcments,
+      appliques,
+      designFormate,
+      timeFrame,
+      autoThreadCutting,
+      additionalInstructions,
+    } = req.body;
+
+    if (
+      !DesignName ||
+      !NumberOfColors ||
+      !NameOfColors ||
+      !Height ||
+      !Width ||
+      !Unit ||
+      !type ||
+      !designPalcments ||
+      !appliques ||
+      !designFormate ||
+      !timeFrame ||
+      !autoThreadCutting ||
+      !additionalInstructions ||
+      !attachArtwork
+    ) {
+      return res.status(400).send("Missing required fields.");
     }
-    await newEstimate.save();
-    res.status(200).send({
-      success: true,
-      newEstimate,
+    const order = new Estimate({
+      userId: req.body.userId,
+      orderType: "Digitizing",
+      orderDetails: {
+        DesignName,
+        NumberOfColors,
+        NameOfColors,
+        Height,
+        Width,
+        Unit,
+        type,
+        designPalcments,
+        appliques,
+        designFormate,
+        timeFrame,
+        autoThreadCutting,
+        additionalInstructions,
+        attachArtwork: attachArtwork[0].url,
+      },
     });
-  } catch (error) {
-    res.status(500).send({
-      success: false,
-      message: "SomeThing Went Wrong!",
+    await order.save();
+    res.status(200).send({ success: true, order });
+  } catch (err) {
+    res.status(500).send({ message: "Internal Server Error", err });
+  }
+};
+
+const estimateVactor = async (req, res) => {
+  const files = req.files;
+  const attachArtwork = [];
+  try {
+    if (!files || files?.length < 1)
+      return res.status(401).json({
+        success: false,
+        message: "You have to upload at least one image to the listing",
+      });
+    for (const file of files) {
+      const { path } = file;
+      try {
+        const uploader = await cloudinary.uploader.upload(path, {
+          folder: "24-Karat",
+        });
+        attachArtwork.push({ url: uploader.url });
+        fs.unlinkSync(path);
+      } catch (err) {
+        if (attachArtwork?.length) {
+          const imgs = imgObjs.map((obj) => obj.public_id);
+          cloudinary.api.delete_resources(imgs);
+        }
+        console.log(err);
+      }
+    }
+    const {
+      userId,
+      DesignName,
+      NumberOfColors,
+      NameOfColors,
+      Height,
+      Width,
+      Unit,
+      whatWillYouUseIfFor,
+      colorScheme,
+      designPalcments,
+      timeFrame,
+      additionalInstructions,
+    } = req.body;
+    if (
+      !DesignName ||
+      !NumberOfColors ||
+      !NameOfColors ||
+      !Height ||
+      !Width ||
+      !Unit ||
+      !whatWillYouUseIfFor ||
+      !colorScheme ||
+      !designPalcments ||
+      !timeFrame ||
+      !additionalInstructions
+    ) {
+      return res.status(400).send("Missing required fields.");
+    }
+    const order = new Estimate({
+      userId: req.body.userId,
+      orderType: "Vactor",
+      orderDetails: {
+        DesignName,
+        NumberOfColors,
+        NameOfColors,
+        Height,
+        Width,
+        Unit,
+        whatWillYouUseIfFor,
+        colorScheme,
+        designPalcments,
+        timeFrame,
+        additionalInstructions,
+        attachArtwork: attachArtwork[0].url,
+      },
     });
+    await order.save();
+    res.status(200).send({ success: true, order });
+  } catch (err) {
+    res.status(500).send({ message: "Internal Server Error", err });
   }
 };
 
@@ -122,8 +287,9 @@ const AdminResponse = async (req, res) => {
     // });
     const { prices, timeDuration } = req.body;
     const estimateId = req.params.Id;
-    console.log(estimateId);
+    // console.log(estimateId);
     const estimate = await Estimate.findById(estimateId).populate("userId");
+    // console.log(estimate);
     const reply = new EsAdmin({
       EstimateId: req.params.Id,
       prices,
@@ -132,9 +298,9 @@ const AdminResponse = async (req, res) => {
     const name = estimate.userId.firstname + " " + estimate.userId.lastname;
     const userEmail = estimate.userId.email;
     const Id = estimate.userId._id;
-    const DesignName = estimate.DesignName;
-    const type = estimate.type;
-
+    const DesignName = estimate.orderDetails.DesignName;
+    const type = estimate.orderType;
+    // console.log(name, userEmail, Id, DesignName, type);
     const mail = sendEmail(
       name,
       userEmail,
@@ -185,9 +351,8 @@ const ifUserAcceptEstimate = async (req, res) => {
       new: true,
     });
     if (estimate.accepted === false) {
-      console.log(456);
+      return;
     } else {
-      console.log(123);
     }
     console.log(estimate);
   } catch (error) {
@@ -196,9 +361,10 @@ const ifUserAcceptEstimate = async (req, res) => {
 };
 
 module.exports = {
-  creatingEstimateRequest,
+  estimateDigitizing,
   getAllEstimate,
   AdminResponse,
   getAdminRes,
   ifUserAcceptEstimate,
+  estimateVactor,
 };
