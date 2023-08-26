@@ -1,7 +1,6 @@
 //route
 const router = require("express").Router();
 
-
 //middlewares
 const verifyUser = require("../middleWares/userVerify");
 const verifyAdmin = require("../middleWares/adminVerify");
@@ -11,30 +10,67 @@ const patchesJoi = require("../middleWares/joiMiddleware/projectSchema/patchesJo
 const graphicsJoi = require("../middleWares/joiMiddleware/projectSchema/graphicsJoi");
 const validDesignerSchema = require("../middleWares/joiMiddleware/designerSchemaJoi");
 const digitizingJoi = require("../middleWares/joiMiddleware/projectSchema/digitizingJoi");
-const upload = require("../helper/multer")
-
+const upload = require("../helper/multer");
 
 //controller
 const { register, login, deleted } = require("../controller/user");
 const { adminRegister, adminlogin } = require("../controller/admin");
-const { createTask, getTask, getDesinerOrders, projectRep, adminSendToUser } = require("../controller/asignTask");
-const { createTickets, getTickets, getUserTickets } = require("../controller/tickets");
-const { designerRegister, designerLogin, getAllDesigner, designerDelete } = require("../controller/designer");
-const { creatingProjectVector, getUserProjectvector, getAllProjectVector } = require("../controller/projects/vactor");
+const {
+  createTask,
+  getTask,
+  getDesinerOrders,
+  projectRep,
+  adminSendToUser,
+} = require("../controller/asignTask");
+const {
+  createTickets,
+  getTickets,
+  getUserTickets,
+} = require("../controller/tickets");
+const {
+  designerRegister,
+  designerLogin,
+  getAllDesigner,
+  designerDelete,
+} = require("../controller/designer");
+const {
+  creatingProjectVector,
+  getUserProjectvector,
+  getAllProjectVector,
+} = require("../controller/projects/vactor");
 // const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
-const { creatingProjectGraphices, getUserProjectGraphices, getAllProjectGraphices, } = require("../controller/projects/graphics");
-const { creatingProjectDigitizing, getUserProjectDigitizing, getAllProjectDigitizing, } = require("../controller/projects/digitizing");
-const { getAllOrder, getAllPendingOrder, getAllInprocessOrder, getAllCompletedOrder, getAllcancelledOrder, getUserAllOrder } = require("../controller/order");
-const { creatingEstimateRequest, getAllEstimate, AdminResponse } = require("../controller/estimate");
+const {
+  creatingProjectGraphices,
+  getUserProjectGraphices,
+  getAllProjectGraphices,
+} = require("../controller/projects/graphics");
+const {
+  creatingProjectDigitizing,
+  getUserProjectDigitizing,
+  getAllProjectDigitizing,
+} = require("../controller/projects/digitizing");
+const {
+  getAllOrder,
+  getAllPendingOrder,
+  getAllInprocessOrder,
+  getAllCompletedOrder,
+  getAllcancelledOrder,
+  getUserAllOrder,
+} = require("../controller/order");
+const {
+  creatingEstimateRequest,
+  getAllEstimate,
+  AdminResponse,
+  getAdminRes,
+  ifUserAcceptEstimate,
+} = require("../controller/estimate");
 const { userPayment, CompletePayment } = require("../controller/userProject");
-
-
 
 //router
 
 //homepage
 router.get("/", (req, res) => {
-    res.send("hello world! from /v1/ !");
+  res.send("hello world! from /v1/ !");
 });
 
 //USER
@@ -50,46 +86,83 @@ router.post("/registerAdmin", adminRegister);
 router.post("/designer/Login", designerLogin);
 router.delete("/deleteDesigner/:id", designerDelete);
 router.get("/getAllDesginer", verifyAdmin, getAllDesigner);
-router.post("/designer/Register", validDesignerSchema, verifyAdmin, designerRegister);
+router.post(
+  "/designer/Register",
+  validDesignerSchema,
+  verifyAdmin,
+  designerRegister
+);
 
 //ASIGN-TASK
 router.get("/getTask/:id", getDesinerOrders);
 router.get("/getAllTask", verifyAdmin, getTask);
 router.post("/createTask", verifyAdmin, createTask);
-router.post("/desginerRep/:id", upload.fields([{ name: "JPGFile", maxCount: 1 }, { name: 'SourceFile', maxCount: 1 }]), projectRep)
-router.post("/prices", adminSendToUser)
+router.post(
+  "/desginerRep/:id",
+  upload.fields([
+    { name: "JPGFile", maxCount: 1 },
+    { name: "SourceFile", maxCount: 1 },
+  ]),
+  projectRep
+);
+router.post("/prices", adminSendToUser);
 
 //TICKETS
 router.get("/AllTickets", getTickets);
 router.post("/createTickets", verifyUser, createTickets);
-router.get("/UserTickets/:id", getUserTickets)
+router.get("/UserTickets/:id", getUserTickets);
 
 //Estimate
-router.post("/Response", verifyAdmin, AdminResponse);
+router.post("/Response/:Id", verifyAdmin, AdminResponse);
 router.get("/AllEstimate", verifyAdmin, getAllEstimate);
-router.post("/EstimateReq", upload.array("JPGFile", 5), verifyUser, patchesJoi, creatingEstimateRequest);
+router.post(
+  "/EstimateReq",
+  upload.array("attachArtwork", 5),
+  verifyUser,
+  patchesJoi,
+  creatingEstimateRequest
+);
+router.get("/resAdmin/:Id", getAdminRes);
+router.put("/ifUserAccept/:Id", ifUserAcceptEstimate);
 
 // payment
-router.post('/paymentuser', userPayment);
-router.post('/payment', CompletePayment)
-
+router.post("/paymentuser", userPayment);
+router.post("/payment", CompletePayment);
 
 //PROJECTS
 
 //Digitizing
 router.get("/digitizing/:id", getUserProjectDigitizing);
 router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
-router.post("/projectDigitizing", upload.array("attachArtwork", 5), digitizingJoi, verifyUser, creatingProjectDigitizing);
+router.post(
+  "/projectDigitizing",
+  upload.array("attachArtwork", 5),
+  digitizingJoi,
+  verifyUser,
+  creatingProjectDigitizing
+);
 
 //Vector
 router.get("/Vector/:id", getUserProjectvector);
 router.get("/Vector", verifyAdmin, getAllProjectVector);
-router.post("/projectVector", upload.array("attachArtwork", 5), vactorJoi, verifyUser, creatingProjectVector);
+router.post(
+  "/projectVector",
+  upload.array("attachArtwork", 5),
+  vactorJoi,
+  verifyUser,
+  creatingProjectVector
+);
 
 //Graphices
 router.get("/Graphices/:id", getUserProjectGraphices);
 router.get("/Graphices", verifyAdmin, getAllProjectGraphices);
-router.post("/projectGraphices", upload.array("attachArtwork", 5), graphicsJoi, verifyUser, creatingProjectGraphices);
+router.post(
+  "/projectGraphices",
+  upload.array("attachArtwork", 5),
+  graphicsJoi,
+  verifyUser,
+  creatingProjectGraphices
+);
 
 // //Patches
 // router.get("/Patches/:id", getUserProjectPatches);
@@ -104,8 +177,6 @@ router.get("/completedOrder", verifyAdmin, getAllCompletedOrder);
 router.get("/cancelledOrder", verifyAdmin, getAllcancelledOrder);
 
 //order get by User
-router.get("/OrderUser/:id", getUserAllOrder)
+router.get("/OrderUser/:id", getUserAllOrder);
 
-
-
-module.exports = router; 
+module.exports = router;
