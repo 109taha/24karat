@@ -241,6 +241,32 @@ const getAllcancelledOrder = async (req, res) => {
     res.status(500).send({ success: false, message: "SomeThing Went Wrong!" });
   }
 };
+const getAlldigitizingOrder = async (req, res) => {
+  try {
+    const order = await Order.find({ orderType: "Digitizing" });
+    if (!order.length > 0) {
+      return res
+        .status(404)
+        .send({ success: false, message: "no Cancelled order found!" });
+    }
+    res.status(200).send({ success: false, order });
+  } catch (err) {
+    res.status(500).send({ success: false, message: "SomeThing Went Wrong!" });
+  }
+};
+const getAllVactorOrder = async (req, res) => {
+  try {
+    const order = await Order.find({ orderType: "Vactor" });
+    if (!order.length > 0) {
+      return res
+        .status(404)
+        .send({ success: false, message: "no Cancelled order found!" });
+    }
+    res.status(200).send({ success: false, order });
+  } catch (err) {
+    res.status(500).send({ success: false, message: "SomeThing Went Wrong!" });
+  }
+};
 
 const getUserAllOrder = async (req, res) => {
   try {
@@ -258,6 +284,8 @@ const getUserAllOrder = async (req, res) => {
 };
 
 module.exports = {
+  getAlldigitizingOrder,
+  getAllVactorOrder,
   CreateVactor,
   CreateDigitizing,
   getAllCompletedOrder,

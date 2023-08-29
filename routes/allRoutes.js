@@ -33,22 +33,22 @@ const {
   getAllDesigner,
   designerDelete,
 } = require("../controller/designer");
-const {
-  creatingProjectVector,
-  getUserProjectvector,
-  getAllProjectVector,
-} = require("../controller/projects/vactor");
+// const {
+//   creatingProjectVector,
+//   getUserProjectvector,
+//   getAllProjectVector,
+// } = require("../controller/projects/vactor");
 // const { creatingProjectPatches, getUserProjectPatches, getAllProjectPatches, } = require("../controller/projects/patches");
 // const {
 //   creatingProjectGraphices,
 //   getUserProjectGraphices,
 //   getAllProjectGraphices,
 // } = require("../controller/projects/graphics");
-const {
-  creatingProjectDigitizing,
-  getUserProjectDigitizing,
-  getAllProjectDigitizing,
-} = require("../controller/projects/digitizing");
+// const {
+//   creatingProjectDigitizing,
+//   getUserProjectDigitizing,
+//   getAllProjectDigitizing,
+// } = require("../controller/projects/digitizing");
 const {
   getAllOrder,
   getAllPendingOrder,
@@ -58,6 +58,8 @@ const {
   getUserAllOrder,
   CreateVactor,
   CreateDigitizing,
+  getAlldigitizingOrder,
+  getAllVactorOrder,
 } = require("../controller/order");
 const {
   estimateDigitizing,
@@ -140,27 +142,27 @@ router.post("/payment", CompletePayment);
 
 //PROJECTS
 
-//Digitizing
-router.get("/digitizing/:id", getUserProjectDigitizing);
-router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
-router.post(
-  "/projectDigitizing",
-  upload.array("attachArtwork", 5),
-  digitizingJoi,
-  verifyUser,
-  creatingProjectDigitizing
-);
+// //Digitizing
+// router.get("/digitizing/:id", getUserProjectDigitizing);
+// router.get("/digitizing", verifyAdmin, getAllProjectDigitizing);
+// router.post(
+//   "/projectDigitizing",
+//   upload.array("attachArtwork", 5),
+//   digitizingJoi,
+//   verifyUser,
+//   creatingProjectDigitizing
+// );
 
-//Vector
-router.get("/Vector/:id", getUserProjectvector);
-router.get("/Vector", verifyAdmin, getAllProjectVector);
-router.post(
-  "/projectVector",
-  upload.array("attachArtwork", 5),
-  vactorJoi,
-  verifyUser,
-  creatingProjectVector
-);
+// //Vector
+// router.get("/Vector/:id", getUserProjectvector);
+// router.get("/Vector", verifyAdmin, getAllProjectVector);
+// router.post(
+//   "/projectVector",
+//   upload.array("attachArtwork", 5),
+//   vactorJoi,
+//   verifyUser,
+//   creatingProjectVector
+// );
 
 // //Graphices
 // router.get("/Graphices/:id", getUserProjectGraphices);
@@ -191,6 +193,8 @@ router.post(
   verifyUser,
   CreateDigitizing
 );
+router.get("/getAlldigitizingOrder", getAlldigitizingOrder);
+router.get("/getAllVactorOrder", getAllVactorOrder);
 router.get("/order", verifyAdmin, getAllOrder);
 router.get("/pendingOrder", verifyAdmin, getAllPendingOrder);
 router.get("/inprocessOrder", verifyAdmin, getAllInprocessOrder);

@@ -4,7 +4,7 @@ const sendEmail = require("../helper/nodeMalier");
 const User = require("../models/user");
 const cloudinary = require("../helper/cloudinary");
 const fs = require("fs");
-const Digitizing = require("../models/projectsSchema/digitizingSchema");
+const Order = require("../models/orderSchema");
 
 // const creatingEstimateRequest = async (req, res) => {
 //   const files = req.files;
@@ -351,10 +351,38 @@ const ifUserAcceptEstimate = async (req, res) => {
       new: true,
     });
     if (estimate.accepted === false) {
-      return;
+      return res.status(200).send("Hope to see you again");
     } else {
+      const order = await Estimate.findById(estimate.EstimateId);
+      console.log(order);
+      const newOrder = new Order({
+        userId: order.userId,
+        orderType: order.orderType,
+        status: "Pending",
+        orderDetails: {
+          DesignName: order.orderDetails.DesignName,
+          NumberOfColors: order.orderDetails.NumberOfColors,
+          NameOfColors: order.orderDetails.NameOfColors,
+          Height: order.orderDetails.Height,
+          Width: order.orderDetails.Width,
+          Unit: order.orderDetails.Unit,
+          type: order.orderDetails.type,
+          whatWillYouUseIfFor: order.orderDetails.whatWillYouUseIfFor,
+          colorScheme: order.orderDetails.colorScheme,
+          designPalcments: order.orderDetails.designPalcments,
+          appliques: order.orderDetails.appliques,
+          designFormate: order.orderDetails.designFormate,
+          timeFrame: order.orderDetails.timeFrame,
+          autoThreadCutting: order.orderDetails.autoThreadCutting,
+          additionalInstructions: order.orderDetails.additionalInstructions,
+          attachArtwork: order.orderDetails.attachArtwork,
+        },
+      });
+      newOrder.save();
     }
-    console.log(estimate);
+    return res
+      .status(200)
+      .send({ success: true, send: "your order is successfully added" });
   } catch (error) {
     res.status(500).send("Internal server error!");
   }
